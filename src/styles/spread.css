@@ -249,13 +249,15 @@
     line-height: 28px; /* Body on rules */
     color: var(--tc-fg-dim);
 }
+/* The visitor's ink — what they type and draw — is the title colour: blue
+ * by day, moss at night (Q30). */
 .notebook {
+    --nb-ink: var(--tc-accent);
     position: absolute;
     left: 72px;
     right: 72px;
     top: 232px; /* 92 + 5 × 28: on a rule */
     bottom: 104px;
-    --nb-ink: var(--riso-blue-deep);
 }
 .notebook-text {
     position: absolute;
@@ -274,9 +276,6 @@
     color: var(--tc-fg-dim);
     opacity: 0.7;
     pointer-events: none;
-}
-.notebook-text:focus-visible {
-    box-shadow: -8px 0 0 -6px var(--nb-ink);
 }
 .notebook-ink {
     position: absolute;
@@ -323,14 +322,14 @@
 }
 .notebook-tools button {
     padding: 6px 10px;
-    border: 1.5px solid var(--tc-fg);
+    border: 1.5px solid var(--tc-accent);
     border-radius: 2px;
-    color: var(--tc-fg);
-    background: var(--white); /* a white card, as drawn (Q18) */
+    color: var(--tc-accent);
+    background: var(--card); /* surface/card, as drawn (Q18); cardboard in the dark */
     transition: background-color 140ms linear;
 }
 .notebook-tools button:hover {
-    background: color-mix(in srgb, var(--tc-fg) 10%, transparent);
+    background: color-mix(in srgb, var(--tc-accent) 12%, var(--card));
 }
 
 /* ── Lightbox ──────────────────────────────────────────────────────────── */

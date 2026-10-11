@@ -84,13 +84,29 @@ export function initNotebook(root: ParentNode = document): () => void {
             const ink = () =>
                 getComputedStyle(page).getPropertyValue("--nb-ink").trim() || "#1a52b5"
             let dpr = 1
+            // Every stroke on the canvas takes the current ink: a drawing
+            // saved in one theme is repainted in the other's (Q30).
+            const retint = () => {
+                ctx.save()
+                ctx.setTransform(1, 0, 0, 1, 0, 0)
+                ctx.globalCompositeOperation = "source-in"
+                ctx.fillStyle = ink()
+                ctx.fillRect(0, 0, canvas.width, canvas.height)
+                ctx.restore()
+            }
             const paintSaved = () => {
                 if (!saved.ink) return
                 const img = new Image()
-                img.onload = () =>
+                img.onload = () => {
                     ctx.drawImage(img, 0, 0, canvas.width / dpr, canvas.height / dpr)
+                    retint()
+                }
                 img.src = saved.ink
             }
+            const scheme = window.matchMedia("(prefers-color-scheme: dark)")
+            scheme.addEventListener("change", retint)
+            const themeObserver = new MutationObserver(retint)
+            themeObserver.observe(document.documentElement, { attributeFilter: ["data-theme"] })
             // Sized to the CSS box at device resolution; a resize clears a
             // canvas, so the saved ink is painted back afterwards.
             //
@@ -163,6 +179,8 @@ export function initNotebook(root: ParentNode = document): () => void {
                 canvas.removeEventListener("pointermove", onMove)
                 canvas.removeEventListener("pointerup", onUp)
                 canvas.removeEventListener("pointercancel", onUp)
+                scheme.removeEventListener("change", retint)
+                themeObserver.disconnect()
                 ro.disconnect()
             })
         }

@@ -880,3 +880,32 @@ styles too.
   the prompts and cues use "Body on rules". The exploration pages are an
   archive and keep their Caveat, now unstyled, as does the "A place at the
   table" invitation's field placeholders.
+
+### Q29. Four photo credits on the back cover
+
+The Figma back cover credits four photographers; the site listed all 21.
+On 2026-10-11 Hendri asked for four, like Figma. `BackCover.astro` shows the
+first four of `CREDITS` in first-use order, the same four Figma names. The
+full list is still generated in `clippings.ts`, next to every source. Unsplash
+does not require credit, and the pictures are placeholders.
+
+### Q30. The back cover loses its crop marks; the visitor's ink follows the theme
+
+Hendri's review of dark mode, 2026-10-11:
+
+- **Crop marks** are gone from the back cover too. Figma's back cover had
+  none. `--crop` stays in the tokens, unused, because Figma still has
+  `line/crop`.
+- **The clear button** was drawn on `--white`, which is the light print stock
+  in dark mode, with cream ink on it. It is now Figma's button: `--card` with
+  a `--tc-accent` border and label. That is cardboard and moss in dark mode,
+  and the sweep already measures accent on card.
+- **The focus line** on the write page went. It was a 2px bar the full
+  height of the writing area, and it read as a giant cursor. The caret shows
+  where the text box has focus.
+- **Pen colour.** The visitor's ink, typed and drawn, is `--tc-accent`.
+  Strokes were already drawn in the current theme's colour, but a drawing is
+  saved as a PNG, so one made in light mode came back blue on the cardboard.
+  Now the canvas is retinted to the current ink when it is painted back, and
+  whenever the theme changes (`prefers-color-scheme` or `data-theme`): a
+  `source-in` fill over the strokes.
