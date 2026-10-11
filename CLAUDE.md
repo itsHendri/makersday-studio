@@ -12,8 +12,8 @@ Q21; the strip panned until 2026-10-08). The look comes from
 Hendri's "Zine" Pinterest board: white stock, riso inks, misregistered
 headlines were the first reading; the chosen direction is **exploration 02,
 the typewriter** (Q12), since retyped from Hendri's Figma cover (Q24):
-Amatic SC titles, Inter body, Courier Prime labels, Special Elite captions,
-Caveat notes; colour scans with tape, the index as a ruler down the right.
+Amatic SC titles, Inter body, Courier Prime labels, Special Elite captions;
+no handwriting (Q28); colour scans with tape, the index as a ruler down the right.
 Colour (Q27): blue on pale blue paper, and a dark mode of cardboard sheets on
 a green cutting mat — from the Figma "Theme" variables, Light and Dark.
 
@@ -38,7 +38,7 @@ those files. Our own `DECISIONS.md` records only what is NEW here, as
   stage off the top. The back cover (colophon, credits) lives INSIDE the
   stage, under the pile (upstream #36, Q21).
 - **Colour comes from roles, never a literal.** Type binds to `--tc-accent`
-  (titles, body), `--tc-fg` (ink: notes, borders), `--tc-fg-dim`,
+  (titles, body), `--tc-fg` (ink: borders, the visitor's writing), `--tc-fg-dim`,
   `--tc-fg-index`, `--tc-fg-hint`, on `--tc-bg` / `--tc-field`; marks use
   `--mark`. Every value is in `tokens.css`, twice (Light, Dark), named after
   the Figma variable's code syntax (Q27). Change a colour in Figma's Theme

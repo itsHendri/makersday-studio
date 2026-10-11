@@ -24,13 +24,13 @@ const nn = String(n).padStart(2, "0")
     aria-label={`Page ${n}: your page, ${kind}`}
 >
 
-    <p class="notebook-prompt t-hand is-lg">{prompt}</p>
+    <p class="notebook-prompt t-body">{prompt}</p>
 
     <div class="notebook" data-notebook={key} data-nb-kind={kind}>
         {
             kind === "write" ? (
                 <div
-                    class="notebook-text t-hand"
+                    class="notebook-text t-body"
                     data-nb-text
                     contenteditable="plaintext-only"
                     role="textbox"
@@ -41,7 +41,7 @@ const nn = String(n).padStart(2, "0")
                 />
             ) : (
                 <>
-                    <span class="notebook-cue t-hand">draw here…</span>
+                    <span class="notebook-cue t-body">draw here…</span>
                     <canvas class="notebook-ink" data-nb-ink aria-label="Your sketch" />
                 </>
             )

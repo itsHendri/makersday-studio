@@ -1,7 +1,5 @@
 ---
 import Clipping from "~/components/Clipping.astro"
-import Note from "~/components/Note.astro"
-import SketchMark from "~/components/SketchMark.astro"
 
 /* Spread 04 — sketches. The warm-white stretch of the stock. */
 ---
@@ -49,12 +47,4 @@ import SketchMark from "~/components/SketchMark.astro"
         kind="scan"
         rotate={-2}
     />
-
-    <Note x={560} y={350} w={200} rotate={-4} arrow="down">
-        the only good one
-    </Note>
-
-    <Note x={1000} y={660} rotate={-2}><s>final</s> first draft</Note>
-
-    <SketchMark motif="ring" x={1170} y={120} w={110} rotate={-8} ink="red" />
 </section>

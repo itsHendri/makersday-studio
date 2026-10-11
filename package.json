@@ -10,7 +10,6 @@
     "deploy": "astro build && wrangler pages deploy dist --project-name=quarta-collective"
   },
   "dependencies": {
-    "@fontsource-variable/caveat": "^5.3.0",
     "@fontsource/amatic-sc": "^5.3.0",
     "@fontsource/courier-prime": "^5.3.0",
     "@fontsource/inter": "^5.3.0",

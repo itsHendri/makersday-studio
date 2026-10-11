@@ -38,7 +38,7 @@ const { sectors = 12, titles } = Astro.props
                         aria-label={`Page ${i + 1}: ${titles[i] ?? ""}`}
                     >
                         <span class="tab-n">{String(i + 1).padStart(2, "0")}</span>
-                        <span class="tab-title t-hand is-sm" aria-hidden="true">
+                        <span class="tab-title t-label" aria-hidden="true">
                             {titles[i] ?? ""}
                         </span>
                     </button>
@@ -49,7 +49,7 @@ const { sectors = 12, titles } = Astro.props
 </nav>
 
 <!-- ── Page number ────────────────────────────────────────────────────── -->
-<div class="page t-hand" id="tc-page" aria-live="polite" data-page="0">
+<div class="page" id="tc-page" aria-live="polite" data-page="0">
     <span data-page>p. 1</span>
 </div>
 
@@ -138,14 +138,14 @@ const { sectors = 12, titles } = Astro.props
         color: var(--tc-fg-dim);
     }
 
-    /* The title shows on hover or focus, written beside the number, on the
+    /* The title shows on hover or focus, typed beside the number, on the
      * page side. */
     .tab-title {
         position: absolute;
         right: 100%;
         top: 50%;
         margin-right: 10px;
-        transform: translateY(-50%) rotate(-2deg);
+        transform: translateY(-50%);
         white-space: nowrap;
         color: var(--tc-fg);
         opacity: 0;

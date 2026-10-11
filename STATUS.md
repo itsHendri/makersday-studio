@@ -15,6 +15,10 @@ in our own colours (Q20). Between Q13 and Q19, Hendri's Figma rounds
 rulings. What remains is Hendri's eye, real photographs, and a scan of the
 real paper.
 
+Since 2026-10-11 there is no handwriting on the page: the margin notes,
+drawn arrows and sketched marks are gone from the site and Figma, and so
+is Caveat (Q28).
+
 ## Verified — the pile (2026-10-08)
 
 | Check | Result |
