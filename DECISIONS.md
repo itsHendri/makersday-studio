@@ -854,3 +854,29 @@ property in `tokens.css`, so Figma and the code share their names.
   The colophon now names the real typefaces. The photo credits stay complete,
   although the Figma back cover shows four.
 - The link preview is the blue cover, from the Figma frame.
+
+### Q28. No handwriting on the page
+
+Hendri emptied every margin note, drawn arrow and sketched mark (asterisk,
+ring, box) out of the Figma pages, but the frames stayed behind and the site
+still drew them. On 2026-10-11 he asked for all of it gone, and for the hand
+styles too.
+
+- **Site:** `Note.astro` and `SketchMark.astro` are deleted, with their CSS
+  (`.note`, `.sketch`) and the unused coffee `.ring`. No spread has a note or
+  a mark left.
+- **Caveat is gone.** The `.t-hand` preset and `--font-hand` are deleted, and
+  so is the `@fontsource-variable/caveat` package. What used it moved to the
+  four faces that remain:
+  - the notebook prompts, the visitor's writing and the "write here…" /
+    "draw here…" cues: Inter (`.t-body`), on the 28px ruling — Figma's
+    "Body on rules";
+  - the index tab titles: Courier Prime (`.t-label`), no longer tilted;
+  - the lightbox caption: Special Elite, as under a clipping;
+  - the signup sheet's error and status lines: Inter.
+- **Figma:** the 50 leftover note, arrow and sketch frames on "Site — all
+  pages" (Light and Dark) are deleted, including p. 8's "grey lino" note,
+  which still had text. Hand/Large, Hand/Medium and Hand/Small are deleted;
+  the prompts and cues use "Body on rules". The exploration pages are an
+  archive and keep their Caveat, now unstyled, as does the "A place at the
+  table" invitation's field placeholders.

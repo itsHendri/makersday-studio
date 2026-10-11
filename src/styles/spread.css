@@ -1,10 +1,9 @@
 /*
- * QUARTA COLLECTIVE — spread interior: head, headline, typed note, clippings,
- * handwritten notes.
+ * QUARTA COLLECTIVE — spread interior: head, headline, typed note, clippings.
  *
  * Two worlds, as in memory-lane (#15) but with the roles recast: the PAGE
  * (ruling, texture) is the notebook; the things on it (clippings,
- * notes, stamps) were put there by a hand. Material belongs to the page and
+ * stamps) were put there by a hand. Material belongs to the page and
  * never tilts; rotation and shadow belong to what is pasted on and never
  * touch the ruling.
  */
@@ -143,7 +142,7 @@
 }
 
 /* The caption is TYPED under the picture, small, in the typewriter's face —
- * exploration 02. Margin notes stay handwritten. */
+ * exploration 02. */
 .clipping-caption {
     position: absolute;
     left: 2px;
@@ -156,76 +155,6 @@
     line-height: 1.3;
     letter-spacing: 0;
     color: var(--tc-fg-dim);
-}
-
-/* ── Handwritten notes ─────────────────────────────────────────────────── */
-
-.note {
-    position: absolute;
-    margin: 0;
-    max-width: 260px;
-    color: var(--tc-fg);
-    pointer-events: none;
-    /* Revealed as if just written: a short fade and settle. `scale` is its own
-     * property so it composes with the authored rotate in `transform`. */
-    opacity: 0;
-    scale: 0.985;
-    transition:
-        opacity 500ms ease-out,
-        scale 500ms ease-out;
-    transition-delay: var(--reveal-delay, 0ms);
-}
-.note.is-revealed {
-    opacity: 1;
-    scale: 1;
-}
-.note[data-tone="red"] {
-    color: var(--riso-red);
-}
-.note[data-tone="blue"] {
-    color: var(--riso-blue-deep);
-}
-.note s {
-    text-decoration-thickness: 2px;
-}
-.note .note-arrow {
-    position: absolute;
-    width: 46px;
-    height: 34px;
-    color: inherit;
-}
-.note .note-arrow.is-right {
-    left: 100%;
-    top: 50%;
-    margin: -17px 0 0 6px;
-}
-.note .note-arrow.is-left {
-    right: 100%;
-    top: 50%;
-    margin: -17px 6px 0 0;
-    transform: scaleX(-1);
-}
-.note .note-arrow.is-down {
-    left: 50%;
-    top: 100%;
-    margin: 2px 0 0 -17px;
-    transform: rotate(90deg);
-}
-.note .note-arrow.is-up {
-    left: 50%;
-    bottom: 100%;
-    margin: 0 0 2px -17px;
-    transform: rotate(-90deg);
-}
-
-/* Clippings also arrive rather than being there already — opacity only, so
- * nothing fights the rig's hover tilt or the authored rotate. */
-.clipping[data-reveal] {
-    opacity: 0;
-    transition: opacity 600ms ease-out var(--reveal-delay, 0ms);
-}
-.clipping[data-reveal].is-revealed {
-    opacity: 1;
 }
 
 /* ── Credits (last spread) ─────────────────────────────────────────────── */
@@ -292,24 +221,8 @@
     }
     /* Flex children stretch by default; the things pasted on keep their
      * own width. */
-    .note,
     .tc-sector .sticker {
         align-self: flex-start;
-    }
-    .note {
-        position: static;
-        /* The authored width is inline (up to 380px) and a phone column is
-         * narrower: let the note take the column instead of widening the
-         * page. */
-        width: auto !important;
-        max-width: none;
-        margin: 10px 0 0;
-        transform: none !important;
-        opacity: 1;
-        scale: 1;
-    }
-    .note .note-arrow {
-        display: none;
     }
     /* `.tc-sector` for weight: paper.css loads after this file, and its
      * `.sticker { position: absolute }` was winning, so on a phone the
@@ -319,9 +232,6 @@
         display: inline-block;
         margin: 16px 0 0;
         transform: rotate(-3deg) !important;
-    }
-    .ring {
-        display: none;
     }
 }
 
@@ -336,6 +246,7 @@
 .notebook-prompt {
     margin-top: 26px;
     max-width: 640px;
+    line-height: 28px; /* Body on rules */
     color: var(--tc-fg-dim);
 }
 .notebook {
@@ -354,8 +265,7 @@
     outline: none;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
-    font-size: 24px;
-    line-height: 28px;
+    line-height: 28px; /* Body on rules: Inter 15 on the 28px ruling */
     color: var(--nb-ink);
     caret-color: var(--nb-ink);
 }
@@ -457,7 +367,10 @@
 }
 .lightbox-figure figcaption {
     margin-top: 8px;
-    color: var(--tc-fg);
+    font-family: var(--font-typed);
+    font-size: 14px;
+    line-height: 1.3;
+    color: var(--tc-fg-dim);
 }
 .lightbox-close {
     position: absolute;
@@ -493,9 +406,6 @@
     .notebook[data-nb-kind="draw"] .notebook-cue {
         left: 20px;
         top: 4px;
-    }
-    .notebook-text {
-        font-size: 22px;
     }
     .notebook-tools {
         position: static;

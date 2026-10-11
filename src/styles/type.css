@@ -1,7 +1,7 @@
 /*
  * QUARTA COLLECTIVE — type system
  *
- * Five faces, one job each (Q24, from Hendri's Figma cover; was the
+ * Four faces, one job each (Q24, from Hendri's Figma cover; was the
  * typewriter set of Q12):
  *
  *   Amatic SC          TITLES — the headline on each sheet, and the back
@@ -14,7 +14,6 @@
  *                      the avatar tooltip. Typed on cards and pasted in.
  *   Special Elite      CAPTIONS — what is typed under a clipping, and the
  *                      page number in the corner.
- *   Caveat             NOTES — anything written on the page by hand.
  *
  * The faces ship as @fontsource packages imported in Base.astro (DECISIONS
  * Q3), so there are no @font-face rules here — Vite hashes and base-prefixes
@@ -25,7 +24,6 @@
     --font-title: "Amatic SC", "Special Elite", cursive;
     --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
     --font-typed: "Special Elite", "Courier Prime", "Courier New", monospace;
-    --font-hand: "Caveat Variable", "Bradley Hand", "Segoe Print", cursive;
     --font-type: "Courier Prime", "Courier New", Courier, monospace;
 }
 
@@ -87,25 +85,6 @@
     line-height: 1.7;
     letter-spacing: 0;
     color: var(--tc-accent);
-}
-
-/* Hand — anything written on the page. Three sizes; `is-lg` is for the one
- * line per spread that was written with feeling. */
-.t-hand {
-    font-family: var(--font-hand);
-    font-weight: 700;
-    font-size: 22px;
-    line-height: 1.15;
-    letter-spacing: 0;
-    color: var(--tc-fg);
-}
-.t-hand.is-sm {
-    font-size: 18px;
-    font-weight: 400;
-}
-.t-hand.is-lg {
-    font-size: 30px;
-    font-weight: 700;
 }
 
 /* Value — numbers the chrome reports. Tabular so nothing reflows. */
