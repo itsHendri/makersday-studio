@@ -74,7 +74,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "")
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content={ogImage} />
 
-        <meta name="theme-color" content="#f3eedd" />
+        <meta name="theme-color" content="#eef3fb" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#1c3329" media="(prefers-color-scheme: dark)" />
 
         <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
 

@@ -11,8 +11,8 @@ import { CREDITS } from "~/content/clippings"
  * like every other sheet.
  *
  * It took the colophon from the cover and the credits from p. 14: the back
- * of a zine is where those are printed. And "back to the top" — the release
- * that used to float over the last spread as "close the notebook".
+ * of a zine is where those are printed. "Back to the top" is gone — Hendri
+ * removed it in Figma (Q27); the index and the scroll bar do that job.
  *
  * On the vertical read there is no pile, so it follows the last sheet in
  * flow and does paper.design's trick exactly: the cover's own box clips
@@ -26,6 +26,9 @@ import { CREDITS } from "~/content/clippings"
 <section class="back-cover" id="tc-back" aria-label="Back cover" data-shown="false">
     <div class="back-inner">
         <div class="back-desk" aria-hidden="true"></div>
+        {/* Crop marks where the pile lay. Only the back cover keeps them: once
+            the last sheet is off, they show where it was (Hendri, Q27). */}
+        <div class="back-crop" aria-hidden="true"></div>
 
         <div class="back-cols">
             <div class="back-col">
@@ -39,7 +42,7 @@ import { CREDITS } from "~/content/clippings"
                 <p class="back-label t-label">Colophon</p>
                 <p class="t-body">
                     This site tells the story; the notebook itself is made by
-                    hand. Type: Special Elite · Caveat · Courier Prime.
+                    hand. Type: Amatic SC · Inter · Courier Prime · Special Elite · Caveat.
                     hendri.design · 2026.
                 </p>
             </div>
@@ -48,26 +51,6 @@ import { CREDITS } from "~/content/clippings"
                 <p class="t-body">
                     Placeholders, from Unsplash: {CREDITS.map((c) => `@${c}`).join(" · ")}.
                 </p>
-                <button class="back-top t-hand" id="tc-close" type="button" hidden>
-                    back to the top
-                    <svg viewBox="0 0 46 34" width="30" height="22" aria-hidden="true">
-                        <path
-                            d="M3 24 C 12 8, 26 6, 41 15"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                        />
-                        <path
-                            d="M33 9 L 41 15 L 32 19"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
-                </button>
             </div>
         </div>
 
@@ -113,6 +96,31 @@ import { CREDITS } from "~/content/clippings"
         display: none;
     }
 
+    .back-crop {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: calc(var(--sheet-w) * var(--sheet-s, 1));
+        height: calc(var(--sheet-h) * var(--sheet-s, 1));
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+    .back-crop::before {
+        content: "";
+        position: absolute;
+        inset: -34px;
+        --len: 22px;
+        background:
+            linear-gradient(var(--crop), var(--crop)) 0 34px / var(--len) 1px,
+            linear-gradient(var(--crop), var(--crop)) 34px 0 / 1px var(--len),
+            linear-gradient(var(--crop), var(--crop)) 100% 34px / var(--len) 1px,
+            linear-gradient(var(--crop), var(--crop)) calc(100% - 34px) 0 / 1px var(--len),
+            linear-gradient(var(--crop), var(--crop)) 0 calc(100% - 34px) / var(--len) 1px,
+            linear-gradient(var(--crop), var(--crop)) 34px 100% / 1px var(--len),
+            linear-gradient(var(--crop), var(--crop)) 100% calc(100% - 34px) / var(--len) 1px,
+            linear-gradient(var(--crop), var(--crop)) calc(100% - 34px) 100% / 1px var(--len);
+        background-repeat: no-repeat;
+    }
     .back-cols {
         position: absolute;
         left: 50%;
@@ -138,24 +146,6 @@ import { CREDITS } from "~/content/clippings"
         color: var(--tc-fg-dim);
     }
 
-    .back-top {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        margin-top: 28px;
-        padding: 6px 4px;
-        color: var(--tc-fg);
-        transform: rotate(-2deg);
-        text-decoration: underline;
-        text-decoration-thickness: 1.5px;
-        text-underline-offset: 4px;
-    }
-    .back-top svg {
-        transform: rotate(-90deg);
-    }
-    .back-top[hidden] {
-        display: none;
-    }
 
     .back-wordmark {
         position: absolute;
@@ -169,11 +159,10 @@ import { CREDITS } from "~/content/clippings"
         letter-spacing: -0.02em;
         font-weight: 700;
         white-space: nowrap;
-        color: var(--tc-fg);
-        opacity: 0.075;
-        mix-blend-mode: multiply;
-        /* Pressed in: a light edge below the stroke, as embossing catches it. */
-        text-shadow: 0 2px 0 rgb(255 255 255 / 0.9);
+        /* text/emboss: the ink's alpha is in the token (8%), per theme. */
+        color: var(--emboss);
+        /* Pressed in: an edge below the stroke, as embossing catches the light. */
+        text-shadow: 0 2px 0 var(--emboss-edge);
         pointer-events: none;
         user-select: none;
     }
@@ -197,6 +186,9 @@ import { CREDITS } from "~/content/clippings"
             inset: 0;
             overflow: hidden;
         }
+        .back-crop {
+            display: none;
+        }
         .back-desk {
             display: block;
             position: absolute;
@@ -215,10 +207,6 @@ import { CREDITS } from "~/content/clippings"
             padding: 72px 20px 0;
             grid-template-columns: 1fr;
             gap: 28px;
-        }
-        .back-top {
-            /* Finger-sized: the one thing on the vertical read a thumb must hit. */
-            padding: 12px 8px;
         }
     }
 </style>

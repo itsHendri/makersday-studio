@@ -56,8 +56,8 @@
         /* The ruler printed down the desk's left edge, the same tick as the
          * index's ruler on the right and in the same phase, so a tick on
          * one side faces a tick on the other (Q20). */
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M0 .5H7M0 12.5H4M0 24.5H11M0 36.5H4' stroke='%23281e0a' stroke-opacity='.5'/%3E%3C/svg%3E"),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M60.25 0V120' stroke='%23281e0a' stroke-opacity='.32' stroke-width='.5' stroke-dasharray='6 6'/%3E%3Cpath d='M0 60.25H120' stroke='%23281e0a' stroke-opacity='.32' stroke-width='.5'/%3E%3C/svg%3E"),
+        var(--svg-ticks),
+        var(--svg-major),
         linear-gradient(to right, var(--desk-line) 1px, transparent 1px),
         linear-gradient(to bottom, var(--desk-line) 1px, transparent 1px);
     background-repeat: repeat-y, repeat, repeat, repeat;
@@ -83,7 +83,7 @@
     background-image: url("../assets/textures/paper.png");
     background-size: 512px 512px;
     mix-blend-mode: multiply;
-    opacity: 0.5; /* TEXTURE_ON.desk — the sweep charges the desk for it */
+    opacity: var(--texture-desk); /* TEXTURE_ON.desk — the sweep charges the desk for it */
 }
 
 .tc-strip {
@@ -107,6 +107,9 @@
     /* Its own stacking context on every layout, so the paper texture (z 6)
      * stays on the sheet and never multiplies over the chrome. */
     isolation: isolate;
+    /* Every sheet is the same stock now (Q27): the theme's --sheet. */
+    --tc-bg: var(--sheet);
+    --tc-field: var(--sheet);
     background-color: var(--tc-bg);
     /* The rig writes translate + rotate here. Do not add a transition: the
      * lerp IS the smoothing, and a CSS transition on top double-smooths. */
@@ -135,31 +138,6 @@
  * 2× would cost a quarter of a gigabyte for nothing. */
 .tc-sector.is-moving {
     will-change: transform;
-}
-
-/* Crop marks at the pile's corners, printed on the desk (Q20). Inside the
- * strip so they scale with it; under every sheet. */
-.crop {
-    position: absolute;
-    inset: -34px;
-    z-index: 0;
-    pointer-events: none;
-    --c: rgb(var(--shadow-rgb) / 0.45);
-    --len: 22px;
-    background:
-        /* top-left */
-        linear-gradient(var(--c), var(--c)) 0 34px / var(--len) 1px,
-        linear-gradient(var(--c), var(--c)) 34px 0 / 1px var(--len),
-        /* top-right */
-        linear-gradient(var(--c), var(--c)) 100% 34px / var(--len) 1px,
-        linear-gradient(var(--c), var(--c)) calc(100% - 34px) 0 / 1px var(--len),
-        /* bottom-left */
-        linear-gradient(var(--c), var(--c)) 0 calc(100% - 34px) / var(--len) 1px,
-        linear-gradient(var(--c), var(--c)) 34px 100% / 1px var(--len),
-        /* bottom-right */
-        linear-gradient(var(--c), var(--c)) 100% calc(100% - 34px) / var(--len) 1px,
-        linear-gradient(var(--c), var(--c)) calc(100% - 34px) 100% / 1px var(--len);
-    background-repeat: no-repeat;
 }
 
 /*
@@ -221,9 +199,5 @@
         box-shadow:
             0 -1px 0 rgb(var(--shadow-rgb) / 0.12),
             0 -14px 28px -18px rgb(var(--shadow-rgb) / 0.45);
-    }
-
-    .crop {
-        display: none;
     }
 }

@@ -41,7 +41,7 @@
     font-size: 56px;
     line-height: 0.95;
     letter-spacing: -0.02em;
-    color: var(--tc-fg);
+    color: var(--tc-accent); /* text/title */
     text-wrap: balance;
     max-width: 1000px;
 }
@@ -78,14 +78,15 @@
     color: var(--tc-fg);
 }
 
-/* Body — the note under a headline, in Inter at 15/170% (Q24). */
+/* Body — the note under a headline, in Inter at 15/170% (Q24), in the
+ * title's blue (text/body, Q27). */
 .t-body {
     font-family: var(--font-body);
     font-weight: 400;
     font-size: 15px;
     line-height: 1.7;
     letter-spacing: 0;
-    color: var(--tc-fg);
+    color: var(--tc-accent);
 }
 
 /* Hand — anything written on the page. Three sizes; `is-lg` is for the one

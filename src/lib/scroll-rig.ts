@@ -24,12 +24,11 @@
  *      top, the deepest page visible, and how far the last sheet has gone.
  * The chrome subscribes rather than recomputing scroll position for itself.
  *
- * Colour is no longer on the bus. Each sheet is ONE stock, set once at
- * mount from `sheetTint`; :root holds the desk's (Q19, upstream #33 still
- * governs how both are measured).
+ * Colour is not the rig's business any more. Every sheet is the theme's
+ * --sheet, and light/dark is CSS (tokens.css, Q27); the contrast of every
+ * role on every surface is measured by scripts/sweep-contrast.ts.
  */
 
-import { RAMP, sheetTint, type RGB } from "./contrast"
 import { exposedAt, pageAt, sheetT, smoothstep } from "./pile"
 
 export interface TcScrollDetail {
@@ -75,8 +74,6 @@ export interface ScrollRigOptions {
     stripId?: string
     /** 0 = follow scroll exactly; higher = more glide. */
     ease?: number
-    /** The stock ramp the sheets are cut from. Defaults to the piece's ramp. */
-    stops?: RGB[]
     /** Below this width the pile is meaningless and the read goes vertical. */
     mobileMax?: number
 }
@@ -138,7 +135,6 @@ export function initScrollRig(options: ScrollRigOptions = {}): () => void {
         trackId = "tc-track",
         stripId = "tc-strip",
         ease = 0.12,
-        stops = RAMP,
         mobileMax = 810,
     } = options
 
@@ -159,18 +155,8 @@ export function initScrollRig(options: ScrollRigOptions = {}): () => void {
     /** Each sheet's last written t, so a frame only touches what moved. */
     const lastT = new Float32Array(n).fill(-1)
 
-    /*
-     * Stock, once. Each sheet carries its own four derived tokens, so type on
-     * it is measured against IT, even while the sheet above is still sliding
-     * off. Written on every layout: the vertical read is sheets too.
-     * z-order is the pile's: the cover on top.
-     */
+    /* z-order is the pile's: the cover on top. */
     sheets.forEach((sheet, i) => {
-        const c = sheetTint(i, n, stops)
-        sheet.style.setProperty("--tc-bg", c.bg)
-        sheet.style.setProperty("--tc-fg", c.fg)
-        sheet.style.setProperty("--tc-fg-dim", c.dim)
-        sheet.style.setProperty("--tc-field", c.bg)
         sheet.style.zIndex = String(n - i)
     })
 

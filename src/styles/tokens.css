@@ -1,99 +1,83 @@
 /*
  * QUARTA COLLECTIVE — design tokens
  *
- * Two layers, inherited from memory-lane (A3) and still the whole colour
- * system:
+ * The colour system is the Figma file's (Q27): the "Theme" variable
+ * collection, Light and Dark, with each variable's code syntax naming the
+ * custom property below. Light is blue on pale blue paper; Dark is
+ * cardboard sheets on a green cutting mat. The browser picks one from the
+ * reader's system setting; `data-theme="light|dark"` on <html> forces one.
  *
- *   1. STATIC tokens (below) — authored values that never change.
- *   2. DERIVED tokens (--tc-*) — measured from the stock under the type.
- *      Since Q19 they are set once per surface (desk, ruler, each sheet),
- *      not every frame. These are what type binds to.
+ * THEME in src/lib/contrast.ts mirrors the hex values here — the two MUST
+ * match, and `node scripts/sweep-contrast.ts` measures every text role on
+ * every surface of both themes, with the paper texture on.
  *
- * The page is a ZINE: white stock printed in one or two inks. The ramp moves
- * between paper stocks — white, a warm white, newsprint grey, a yellow sheet —
- * and every stop sits far above the ink flip (L 0.179), so the derived
- * foreground is black throughout. Type still binds to --tc-fg / --tc-fg-dim,
- * because the dim tone is MEASURED against the live stock (memory-lane #33).
- *
- * The riso inks are a second register. Only --riso-blue-deep is a TEXT ink
- * (5.8:1 on the darkest stock); the rest are for block prints, duotone
- * pictures, misregistration and tape — things that carry no words, or words
- * at display size. (DECISIONS Q8.)
+ * Type binds only to the --tc-* layer (memory-lane A3, upstream #33):
+ *   --tc-bg / --tc-field   the surface under the type (desk, or the sheet)
+ *   --tc-accent            titles and body — the blue (moss at night)
+ *   --tc-fg                ink: handwriting, rules drawn by hand, borders
+ *   --tc-fg-dim            captions, labels, the page number
+ * :root carries the desk's; every sheet sets --tc-bg / --tc-field to its
+ * own stock (stage.css).
  */
 
 :root {
-    /* ── Paper stocks ───────────────────────────────────────────────────── */
-    --paper: #f3eedd; /* warm stock; the ramp's rest state (exploration 02) */
-    --paper-warm: #f6f4ee; /* a whiter sheet */
-    --newsprint: #e9e7df; /* grey newsprint */
-    --paper-yellow: #efe4c2; /* a yellowed sheet */
-    --white: #fffdf8; /* a photo's matte — material, not page */
-    --ink: #1b1917; /* authored ink, for things that never travel (favicon) */
-    --graphite: #6b655c; /* pencil grey; the derived dim overrides it on the page */
+    color-scheme: light;
 
-    /* ── Riso inks ──────────────────────────────────────────────────────── */
-    --riso-blue: #0078bf; /* decorative: prints, duotones. 4.3:1 — not for small text */
-    --riso-blue-deep: #1a52b5; /* the second TEXT ink: 6.5:1 white, 5.8:1 newsprint */
-    --riso-red: #b5371f; /* the typewriter's red ribbon: clears 4.5:1 on every stock, so it may carry small text (tab numbers, stamps) */
-    --riso-red-fluo: #ff665e; /* decorative only */
-    --riso-pink: #ff48b0; /* decorative only */
-    --riso-green: #00a95c; /* decorative only */
-    --riso-yellow: #ffe800; /* decorative only */
-    --tape: rgba(217, 207, 163, 0.6); /* masking tape, kraft-coloured, translucent */
+    /* ── Theme: Light (Figma "Theme" → Light) ───────────────────────────── */
+    --desk: #eef3fb; /* surface/desk */
+    --sheet: #f7faff; /* surface/sheet */
+    --card: #fbfdff; /* surface/card — buttons, the "+" */
+    --print: #fbfdff; /* surface/print — a photograph's border */
+    --ruler: #f8fbff; /* surface/ruler — the index column */
+    --tape: rgb(191 211 242 / 0.6); /* surface/tape */
+    --accent: #1a52b5; /* text/title, text/body */
+    --ink: #0f2149; /* text/hand */
+    --muted: #5b6478; /* text/muted */
+    --subtle: #737c90; /* text/subtle */
+    --mark: #2c66e0; /* mark/accent — what the red ribbon used to do (4.75:1 textured) */
+    --ruled-line: #b9c9e6; /* border/rule */
+    --square-line: #b9c9e6; /* border/rule, on squared pages */
+    --margin-line: #9db7ee; /* border/margin */
+    --dot: #a9b6cc; /* border/dot */
+    --line-rgb: 10 26 60; /* navy: the desk's printed lines */
+    --desk-line: rgb(var(--line-rgb) / 0.09); /* line/grid-fine */
+    --desk-major: rgb(var(--line-rgb) / 0.32); /* line/grid-major */
+    --tick: rgb(var(--line-rgb) / 0.5); /* line/ruler */
+    --crop: rgb(var(--line-rgb) / 0.45); /* line/crop */
+    --dashed: rgb(var(--line-rgb) / 0.4); /* border/dashed — the "+" */
+    --tc-fg-index: rgb(91 100 120 / 0.5); /* text/index — unselected tabs */
+    --tc-fg-hint: rgb(115 124 144 / 0.7); /* text/placeholder */
+    --emboss: rgb(var(--line-rgb) / 0.08); /* text/emboss — the back cover's wordmark */
+    --emboss-edge: rgb(255 255 255 / 0.07); /* the light catching the pressed edge */
+    --shadow-rgb: 10 26 60; /* shadows are navy, in both themes */
+    /* The desk's printed ruler and major grid: SVG tiles can't read a custom
+     * property, so each theme carries its own (line/ruler, line/grid-major). */
+    --svg-ticks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M0 .5H7M0 12.5H4M0 24.5H11M0 36.5H4' stroke='%230a1a3c' stroke-opacity='.5'/%3E%3C/svg%3E");
+    --svg-major: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M60.25 0V120' stroke='%230a1a3c' stroke-opacity='.32' stroke-width='.5' stroke-dasharray='6 6'/%3E%3Cpath d='M0 60.25H120' stroke='%230a1a3c' stroke-opacity='.32' stroke-width='.5'/%3E%3C/svg%3E");
+    --texture-sheet: 0.45; /* TEXTURE_ON.sheet */
+    --texture-desk: 0.5; /* TEXTURE_ON.desk */
 
-    --steel: #9a9a96; /* a staple */
-    --steel-light: #d6d6d2;
-    --steel-dark: #8d8d89;
-    --coffee: #8a5a2b; /* the ring */
-    --shadow-rgb: 40 30 10; /* every shadow is warm ink, not black */
+    /* Older names still used by the components, pointed at the roles. */
+    --white: var(--print);
+    --paper: var(--sheet);
+    --paper-warm: var(--card);
+    --newsprint: var(--desk);
+    --riso-red: var(--mark);
+    --riso-blue-deep: var(--accent);
+    --riso-blue: var(--accent);
+    --riso-red-fluo: var(--mark);
+    --coffee: var(--muted);
+    --rule: color-mix(in srgb, var(--muted) 30%, transparent);
+    --misregister: transparent;
 
-    /* ── Semantic aliases ───────────────────────────────────────────────── */
-    --rule: color-mix(in srgb, var(--graphite) 30%, transparent);
-    --ruled-line: #d4c8a8; /* sepia ruling, as drawn in Figma (Q17) */
-    --margin-line: #e0a7a0;
-    --dot: #b9b2a0;
-    --square-line: #cfc4a6;
-    --misregister: transparent; /* exploration 02 has no misregistration */
-
-    /*
-     * The stock ramp. Consumed by the rig in JS (RAMP_HEX in contrast.ts —
-     * the two MUST match); declared here so it is authored in one place and
-     * readable by a human. Six stops, sampled at p 0 / .2 / .4 / .6 / .8 / 1.
-     */
-    --ramp-0: var(--paper);
-    --ramp-1: var(--paper-warm);
-    --ramp-2: var(--paper);
-    --ramp-3: var(--newsprint);
-    --ramp-4: var(--paper-yellow);
-    --ramp-5: var(--paper);
-
-    /* ── The desk (Q19) ──────────────────────────────────────────────────── */
-    /*
-     * The sheets lie on graph paper a shade darker than the stock, as
-     * paper.design's white cards lie on its cream layer. DESK_HEX in
-     * contrast.ts must match; the sweep measures it.
-     */
-    --desk: #eae4d2;
-    --desk-line: rgb(var(--shadow-rgb) / 0.09); /* the 10px grid */
-    --desk-major: rgb(var(--shadow-rgb) / 0.2); /* the 120px grid */
-    --ruler: var(--paper-warm); /* the index is a ruler laid on the desk; RULER_HEX */
-    --tick: rgb(var(--shadow-rgb) / 0.55);
-
-    /* ── Derived ────────────────────────────────────────────────────────── */
-    /*
-     * At :root these are the DESK's values, constant: the chrome (wordmark,
-     * page number, lightbox) is printed on the desk. Every sheet overrides
-     * all four with its own stock, set once by the rig from `sheetTint` (Q19);
-     * the ruler overrides them with its own. Type still binds only to these.
-     * The values here are what `tintOf(DESK_HEX, TEXTURE_ON.desk)` measures, so the page is
-     * legible before the rig runs and with JS off.
-     */
+    /* ── Derived: the desk's, for the chrome ────────────────────────────── */
     --tc-p: 0;
     --tc-pan: 0px;
     --tc-bg: var(--desk);
-    --tc-fg: #000000;
-    --tc-fg-dim: rgb(92, 90, 82);
     --tc-field: var(--desk);
+    --tc-accent: var(--accent);
+    --tc-fg: var(--ink);
+    --tc-fg-dim: var(--muted);
 
     /* ── Geometry ───────────────────────────────────────────────────────── */
     --sector-w: 1400px; /* one spread's width: the sheet's */
@@ -104,4 +88,73 @@
     --stage-h: 100vh;
     --bp-phone: 810px; /* below this the rig goes inert; vertical read */
     --bp-desk: 1200px;
+}
+
+/* ── Theme: Dark (Figma "Theme" → Dark) — cardboard on a cutting mat ───── */
+/*
+ * Written twice, because a media query cannot share a block with an
+ * attribute selector: once for the system setting (unless the page forces
+ * light), once for a page that forces dark.
+ */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --desk: #1c3329; /* the mat */
+        --sheet: #4a3d2c; /* cardboard */
+        --card: #56483a;
+        --print: #d8d2c2;
+        --ruler: #172a22; /* the mat's printed edge */
+        --tape: rgb(138 118 80 / 0.6);
+        --accent: #d3e4be; /* moss */
+        --ink: #f1eada; /* cream */
+        --muted: #c2bfa8; /* sage */
+        --subtle: #a29e86;
+        --mark: #e8be72; /* brass */
+        --ruled-line: #5e4f3b;
+        --square-line: #5e4f3b;
+        --margin-line: #7a6040;
+        --dot: #6a5b46;
+        --line-rgb: 211 230 201; /* the mat's printed grid */
+        --desk-line: rgb(var(--line-rgb) / 0.1);
+        --desk-major: rgb(var(--line-rgb) / 0.24);
+        --tick: rgb(var(--line-rgb) / 0.45);
+        --crop: rgb(var(--line-rgb) / 0.38);
+        --dashed: rgb(237 230 211 / 0.4);
+        --tc-fg-index: rgb(194 191 168 / 0.6);
+        --tc-fg-hint: rgb(162 158 134 / 0.8);
+        --emboss: rgb(237 230 211 / 0.08);
+        --emboss-edge: rgb(0 0 0 / 0.06);
+        --svg-ticks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M0 .5H7M0 12.5H4M0 24.5H11M0 36.5H4' stroke='%23d3e6c9' stroke-opacity='.45'/%3E%3C/svg%3E");
+        --svg-major: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M60.25 0V120' stroke='%23d3e6c9' stroke-opacity='.24' stroke-width='.5' stroke-dasharray='6 6'/%3E%3Cpath d='M0 60.25H120' stroke='%23d3e6c9' stroke-opacity='.24' stroke-width='.5'/%3E%3C/svg%3E");
+    }
+}
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --desk: #1c3329;
+    --sheet: #4a3d2c;
+    --card: #56483a;
+    --print: #d8d2c2;
+    --ruler: #172a22;
+    --tape: rgb(138 118 80 / 0.6);
+    --accent: #d3e4be;
+    --ink: #f1eada;
+    --muted: #c2bfa8;
+    --subtle: #a29e86;
+    --mark: #e8be72;
+    --ruled-line: #5e4f3b;
+    --square-line: #5e4f3b;
+    --margin-line: #7a6040;
+    --dot: #6a5b46;
+    --line-rgb: 211 230 201;
+    --desk-line: rgb(var(--line-rgb) / 0.1);
+    --desk-major: rgb(var(--line-rgb) / 0.24);
+    --tick: rgb(var(--line-rgb) / 0.45);
+    --crop: rgb(var(--line-rgb) / 0.38);
+    --dashed: rgb(237 230 211 / 0.4);
+    --tc-fg-index: rgb(194 191 168 / 0.6);
+    --tc-fg-hint: rgb(162 158 134 / 0.8);
+    --emboss: rgb(237 230 211 / 0.08);
+    --emboss-edge: rgb(0 0 0 / 0.06);
+    --svg-ticks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M0 .5H7M0 12.5H4M0 24.5H11M0 36.5H4' stroke='%23d3e6c9' stroke-opacity='.45'/%3E%3C/svg%3E");
+    --svg-major: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M60.25 0V120' stroke='%23d3e6c9' stroke-opacity='.24' stroke-width='.5' stroke-dasharray='6 6'/%3E%3Cpath d='M0 60.25H120' stroke='%23d3e6c9' stroke-opacity='.24' stroke-width='.5'/%3E%3C/svg%3E");
 }

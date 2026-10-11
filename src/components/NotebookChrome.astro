@@ -1,6 +1,4 @@
 ---
-import { RULER_HEX, TEXTURE_ON, tintOf } from "~/lib/contrast"
-
 interface Props {
     sectors?: number
     /** One title per spread, for the index tabs' labels. */
@@ -17,21 +15,18 @@ const { sectors = 12, titles } = Astro.props
  *   mark      fixed top-left — the wordmark.
  *   page      fixed bottom-left — "p. 4", written in the corner.
  *
- * "Back to the top" moved to the back cover (Q21). Nothing here addresses
- * the visitor (memory-lane #15).
+ * Nothing here addresses the visitor (memory-lane #15).
  *
- * The ruler is its own stock (the whiter sheet), so its numbers are measured
- * against it, here, at build — the sweep measures the same hex.
+ * The ruler is its own surface (--ruler, per theme, Q27); the sweep measures
+ * the index numbers on it in both themes.
  */
-const ruler = tintOf(RULER_HEX, TEXTURE_ON.ruler)
-const rulerVars = `--tc-bg:${ruler.bg};--tc-fg:${ruler.fg};--tc-fg-dim:${ruler.dim};--tc-field:${ruler.bg};`
 ---
 
 <!-- ── Index, on a ruler down the right ───────────────────────────────── -->
 <nav class="tabs" id="tc-rail" aria-label="Index" style={`--n:${sectors}`}>
     <span class="tabs-mark t-eyebrow">Quarta Collective</span>
     <i class="tabs-rule" aria-hidden="true"></i>
-    <div class="tabs-col" style={rulerVars}>
+    <div class="tabs-col">
         <div class="tabs-cells" data-rail-cells>
             {
                 Array.from({ length: sectors }, (_, i) => (
@@ -85,7 +80,7 @@ const rulerVars = `--tc-bg:${ruler.bg};--tc-fg:${ruler.fg};--tc-fg-dim:${ruler.d
          */
         background-color: var(--ruler);
         background-image:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M0 .5H7M0 12.5H4M0 24.5H11M0 36.5H4' stroke='%23281e0a' stroke-opacity='.5'/%3E%3C/svg%3E"),
+            var(--svg-ticks),
             url("../assets/textures/paper.png");
         background-repeat: repeat-y, repeat;
         background-size: 48px 48px, 512px 512px;
@@ -130,17 +125,17 @@ const rulerVars = `--tc-bg:${ruler.bg};--tc-fg:${ruler.fg};--tc-fg-dim:${ruler.d
         font-family: var(--font-type);
         font-size: 12px;
         letter-spacing: 0.08em;
-        color: var(--tc-fg-dim);
-        opacity: 0.5;
-        transition: opacity 160ms linear;
+        /* text/index: half-strength numbers, the alpha in the token (Q27). */
+        color: var(--tc-fg-index);
+        transition: color 160ms linear;
     }
     .tab[data-state="reading"] {
         font-weight: 700;
-        opacity: 1;
+        color: var(--tc-fg-dim);
     }
     .tab:hover,
     .tab:focus-visible {
-        opacity: 1;
+        color: var(--tc-fg-dim);
     }
 
     /* The title shows on hover or focus, written beside the number, on the
