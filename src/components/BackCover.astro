@@ -1,6 +1,9 @@
 ---
 import { CREDITS } from "~/content/clippings"
 
+/* The first four photographers, as on the Figma back cover (Q29). The full
+ * list stays in clippings.ts, with every source. */
+
 /*
  * The back cover (Q21) — what is waiting under the last sheet.
  *
@@ -26,9 +29,6 @@ import { CREDITS } from "~/content/clippings"
 <section class="back-cover" id="tc-back" aria-label="Back cover" data-shown="false">
     <div class="back-inner">
         <div class="back-desk" aria-hidden="true"></div>
-        {/* Crop marks where the pile lay. Only the back cover keeps them: once
-            the last sheet is off, they show where it was (Hendri, Q27). */}
-        <div class="back-crop" aria-hidden="true"></div>
 
         <div class="back-cols">
             <div class="back-col">
@@ -49,7 +49,7 @@ import { CREDITS } from "~/content/clippings"
             <div class="back-col">
                 <p class="back-label t-label">Photographs</p>
                 <p class="t-body">
-                    Placeholders, from Unsplash: {CREDITS.map((c) => `@${c}`).join(" · ")}.
+                    Placeholders, from Unsplash: {CREDITS.slice(0, 4).map((c) => `@${c}`).join(" · ")}.
                 </p>
             </div>
         </div>
@@ -96,31 +96,6 @@ import { CREDITS } from "~/content/clippings"
         display: none;
     }
 
-    .back-crop {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: calc(var(--sheet-w) * var(--sheet-s, 1));
-        height: calc(var(--sheet-h) * var(--sheet-s, 1));
-        transform: translate(-50%, -50%);
-        pointer-events: none;
-    }
-    .back-crop::before {
-        content: "";
-        position: absolute;
-        inset: -34px;
-        --len: 22px;
-        background:
-            linear-gradient(var(--crop), var(--crop)) 0 34px / var(--len) 1px,
-            linear-gradient(var(--crop), var(--crop)) 34px 0 / 1px var(--len),
-            linear-gradient(var(--crop), var(--crop)) 100% 34px / var(--len) 1px,
-            linear-gradient(var(--crop), var(--crop)) calc(100% - 34px) 0 / 1px var(--len),
-            linear-gradient(var(--crop), var(--crop)) 0 calc(100% - 34px) / var(--len) 1px,
-            linear-gradient(var(--crop), var(--crop)) 34px 100% / 1px var(--len),
-            linear-gradient(var(--crop), var(--crop)) 100% calc(100% - 34px) / var(--len) 1px,
-            linear-gradient(var(--crop), var(--crop)) calc(100% - 34px) 100% / 1px var(--len);
-        background-repeat: no-repeat;
-    }
     .back-cols {
         position: absolute;
         left: 50%;
@@ -185,9 +160,6 @@ import { CREDITS } from "~/content/clippings"
             position: fixed;
             inset: 0;
             overflow: hidden;
-        }
-        .back-crop {
-            display: none;
         }
         .back-desk {
             display: block;
