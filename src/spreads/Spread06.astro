@@ -1,7 +1,6 @@
 ---
 import Clipping from "~/components/Clipping.astro"
 import Note from "~/components/Note.astro"
-import Sticker from "~/components/Sticker.astro"
 
 /*
  * Spread 06 — the argument. The red note is size="lg": display-size red is
@@ -30,12 +29,6 @@ import Sticker from "~/components/Sticker.astro"
         kind="scan"
         tape
     />
-
-    <Note x={130} y={520} w={380} rotate={-2} size="lg">
-        lamp ✗ &nbsp; chair ✗ &nbsp; app ✗✗
-    </Note>
-
-    <Sticker x={330} y={600} rotate={-10} tone="red">parked</Sticker>
 
     <Note x={500} y={640} w={260} rotate={-3} size="lg" tone="red" arrow="right">
         a notebook. obviously.

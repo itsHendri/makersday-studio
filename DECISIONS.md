@@ -800,3 +800,57 @@ long scroll).
   the real faces composited in locally. Absolute URL from `site`. The page
   description now reads "A space to make and create with friends. Three of
   us, one table, Wednesday evenings."
+
+---
+
+### Q27. Blue, and a dark mode: cardboard on a cutting mat
+
+**2026-10-11, Hendri.** The colour system now comes from the Figma file. The
+"Theme" variable collection has **Light** (blue on pale blue paper) and
+**Dark** (cardboard sheets on a dark green cutting mat), aliased to a
+"Primitives" collection. Each variable's WEB code syntax names its custom
+property in `tokens.css`, so Figma and the code share their names.
+
+- **The ramp is gone.** Every sheet is one stock, `--sheet`; light/dark is
+  CSS (`prefers-color-scheme`, or `data-theme="light|dark"` on `<html>` to
+  force one). The rig no longer writes any colour (Q19's `sheetTint` and
+  the ruler's `tintOf` are deleted).
+- **Roles.**
+  - Surfaces: desk, sheet, card, print, ruler, tape.
+  - `--tc-accent` (text/title and text/body; title and body are blue).
+  - `--tc-fg` (text/hand, the ink: notes and borders), `--tc-fg-dim` (muted),
+    `--tc-fg-index` and `--tc-fg-hint`, which have alpha.
+  - `--mark` (mark/accent): the red ribbon's job, now blue, or brass at night.
+  - Rules, margin and dots; the desk's lines at their alphas; `--emboss`.
+
+  The old names (`--white`, `--paper`, `--riso-red`, …) are aliases pointing
+  at the roles.
+- **Alpha lives in the variable.** In Figma, binding a colour variable resets
+  a paint's own opacity, and switching mode re-resolves it, so the faint
+  lines and half-strength numbers had to carry their alpha in the variable.
+  The CSS does the same.
+- **SVG tiles per theme.** The desk's ruler ticks and 120px grid are SVG
+  tiles with a baked stroke, so each theme carries its own (`--svg-ticks`,
+  `--svg-major`).
+- **Measured.** `THEME` in `contrast.ts` mirrors `tokens.css`. The sweep
+  measures every text role on desk, ruler, sheet and card in both themes,
+  with the paper texture charged:
+  - Lowest required values: light mark 4.75:1, light muted on the desk
+    5.14:1, dark muted on the sheet 5.76:1.
+  - The light mark was `#2F6BEA` in Figma at 4.39:1. It is now `#2C66E0` in
+    both the code and Figma.
+  - Placeholders and unselected index numbers are faint by design and only
+    reported.
+- **Hendri's removals, from the Figma pages:**
+  - p. 7: the "lamp ✗ chair ✗ app ✗✗" note and the "parked" stamp.
+  - p. 8: the "samples" tag. p. 9: the coffee ring. p. 10: the "failed — keep"
+    stamp. p. 13: the "no. 3 · 2026" stamp and the asterisk.
+  - p. 14: the "bring the pencil idea" and "— and the good lamp" notes, and
+    the asterisk.
+  - The crop marks on pages 1–14. They stay on the back cover, so they now
+    live in `BackCover.astro` and show only once the pile is gone.
+  - "Back to the top" (and its wiring).
+
+  The colophon now names the real typefaces. The photo credits stay complete,
+  although the Figma back cover shows four.
+- The link preview is the blue cover, from the Figma frame.

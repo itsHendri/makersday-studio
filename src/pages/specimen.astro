@@ -1,29 +1,23 @@
 ---
 import Base from "~/layouts/Base.astro"
-import { RAMP, RAMP_HEX, tint } from "~/lib/contrast"
 
 /*
  * Type specimen — the permanent dev surface for the type system. Every
- * preset on every stop of the paper ramp, with the derived ink and dim tone
- * computed by the same `tint()` the rig runs, so what is seen here is what
- * the page gets. Not linked from the piece.
+ * preset on the two surfaces the theme prints on (the desk and a sheet), in
+ * whichever theme the system is set to — switch the OS to dark to see the
+ * cardboard-on-the-mat side (Q27). Not linked from the piece.
  */
-const stops = RAMP_HEX.map((hex, i) => ({
-    hex,
-    ...tint(RAMP, i / (RAMP_HEX.length - 1)),
-}))
+const surfaces = [
+    { name: "sheet", style: "--tc-bg: var(--sheet); --tc-field: var(--sheet);" },
+    { name: "desk", style: "--tc-bg: var(--desk); --tc-field: var(--desk);" },
+]
 ---
 
 <Base title="Quarta Collective — specimen" description="Type specimen.">
     {
-        stops.map((s) => (
-            <section
-                class="stop"
-                style={`--tc-bg:${s.bg}; --tc-fg:${s.fg}; --tc-fg-dim:${s.dim}; --tc-field:${s.bg};`}
-            >
-                <p class="t-eyebrow">
-                    stop {s.hex} · L {s.lum.toFixed(3)} · dim {s.dim}
-                </p>
+        surfaces.map((s) => (
+            <section class="stop" style={s.style}>
+                <p class="t-eyebrow">surface: {s.name}</p>
                 <h2 class="t-display">
                     The art of <em>making</em>
                 </h2>
@@ -33,7 +27,7 @@ const stops = RAMP_HEX.map((hex, i) => ({
                 </p>
                 <p class="t-hand is-lg">a notebook. obviously.</p>
                 <p class="t-hand">120gsm — too thin. 160 — just right.</p>
-                <p class="t-hand" style="color: var(--riso-blue-deep)">second pass, 2mm out</p>
+                <p class="t-hand" style="color: var(--mark)">second pass, 2mm out</p>
                 <p class="t-hand is-sm">wk 6, the one that opens flat</p>
                 <p class="t-label">Index · p. 04</p>
                 <p class="t-value">2026-10-05 · 48 pp · 160 gsm</p>

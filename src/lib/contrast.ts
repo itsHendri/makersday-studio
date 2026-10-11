@@ -1,34 +1,20 @@
 /**
- * Contrast-safe colour derivation.
+ * Contrast, measured.
  *
- * The page tints as it pans, so no authored foreground colour can be correct
- * for the whole read. Instead the foreground is DERIVED from the live
- * background's luminance, every frame. The alternative — crossfading two
- * authored colours — collapses to about 1.0:1 at the midpoint of an inverting
- * fade, because both ends pass through mid-grey together. (Upstream #21.)
+ * Until Q27 the foreground was DERIVED: the page tinted through a ramp of
+ * paper stocks and every surface's ink and dim tone were computed from its
+ * luminance (upstream #21, #33). The theme now comes from the Figma file's
+ * variables, Light and Dark, so the colours are authored — but every pair is
+ * still MEASURED, here, by `scripts/sweep-contrast.ts`, including the paper
+ * texture multiplied over each surface. `THEME` must mirror tokens.css.
  *
- * Pure functions, no DOM. Kept separate from the rig so the whole system can be
- * swept and measured in Node — see `scripts/sweep-contrast.ts`.
+ * Pure functions, no DOM.
  */
 
 export type RGB = [number, number, number]
 
-/** WCAG AA for body text, with a little headroom. */
-export const TARGET = 4.6
-
-/**
- * The flip point between a white and a black foreground.
- *
- * White clears 4.6:1 while background luminance is <= 0.178. Black clears it
- * from >= 0.180 up. Those windows only overlap because the dark foreground is
- * PURE black — with the palette's near-black (#05060F) there is a band around
- * L ~ 0.19 where NEITHER choice passes and type quietly drops to ~2.6:1. The
- * ramp crosses that band twice per read, so this is not theoretical.
- *
- * Do not "tidy" this to a palette colour, and do not move it to 0.35 (which is
- * where it originally sat, in the middle of the dead band). Upstream #33.
- */
-export const FLIP = 0.179
+/** WCAG AA for body text. */
+export const TARGET = 4.5
 
 function srgbToLinear(c: number): number {
     const s = c / 255
@@ -65,120 +51,24 @@ export function hexToRgb(hex: string): RGB {
 
 export const rgbToCss = ([r, g, b]: RGB) => `rgb(${r}, ${g}, ${b})`
 
-/**
- * The dimmest step from the foreground toward the background that still clears
- * TARGET.
- *
- * A fixed alpha cannot do this job. `rgba(255,255,255,0.62)` measures a
- * comfortable 6:1 over the near-black sections and only 4.2:1 over saturated
- * blue, because an alpha composites against the background's CHANNELS, not its
- * luminance — so one alpha is a different contrast on every hue. Walking the
- * mix and measuring is a few dozen operations per frame and is right by
- * construction at every point on the ramp.
- *
- * Rule: never express a derived dim tone as an alpha. Upstream #33.
- */
-export function pickDim(bg: RGB, fg: number, bgLum: number): RGB {
-    let best: RGB = [fg, fg, fg]
-    // Integer steps (0.10 … 0.80) rather than accumulating +=0.05 in floating
-    // point, which drifts and can drop the final step.
-    for (let i = 2; i <= 16; i++) {
-        const t = i * 0.05
-        const mix: RGB = [
-            Math.round(fg + (bg[0] - fg) * t),
-            Math.round(fg + (bg[1] - fg) * t),
-            Math.round(fg + (bg[2] - fg) * t),
-        ]
-        if (contrastRatio(luminance(...mix), bgLum) < TARGET) break
-        best = mix
-    }
-    return best
+/** A colour at `alpha` over `under`, composited — what the eye gets. */
+export function over(color: RGB, alpha: number, under: RGB): RGB {
+    return [0, 1, 2].map((i) => Math.round(color[i]! * alpha + under[i]! * (1 - alpha))) as RGB
 }
-
-/** Sample a multi-stop ramp at p (0..1), interpolating in sRGB. */
-export function sampleRamp(stops: RGB[], p: number): RGB {
-    const n = stops.length - 1
-    // Clamped just below 1 so the floor never lands on the last stop and index
-    // out of range.
-    const x = Math.min(0.9999, Math.max(0, p)) * n
-    const i = Math.floor(x)
-    const t = x - i
-    const a = stops[i]!
-    const b = stops[Math.min(n, i + 1)]!
-    return [
-        Math.round(a[0] + (b[0] - a[0]) * t),
-        Math.round(a[1] + (b[1] - a[1]) * t),
-        Math.round(a[2] + (b[2] - a[2]) * t),
-    ]
-}
-
-export interface Tint {
-    bg: string
-    fg: string
-    dim: string
-    /** Kept for measurement and debugging — the raw values behind the strings. */
-    rgb: RGB
-    lum: number
-}
-
-/** Interpolate the background at p and derive a legible foreground for it. */
-export function tint(stops: RGB[], p: number): Tint {
-    const c = sampleRamp(stops, p)
-    const L = luminance(...c)
-    const dark = L < FLIP
-    const fgChannel = dark ? 255 : 0
-    return {
-        bg: rgbToCss(c),
-        fg: dark ? "#FFFFFF" : "#000000",
-        dim: rgbToCss(pickDim(c, fgChannel, L)),
-        rgb: c,
-        lum: L,
-    }
-}
-
-/**
- * The tint ramp: void → signal → void → deep ember → ember → void.
- *
- * Every hue transit routes back through the near-black anchor. That is not a
- * rhythm choice — it is the fix for the "dirty grey". RGB interpolation between
- * two distant hues runs through their average, which is duller than either end,
- * so blue → light neutral spends half its journey in desaturated lavender and
- * blue → orange spends it in mud. The grey was never a stop; it was the space
- * between stops. (Upstream #32.)
- *
- * The deep-ember stop (#43200A) fixes the last neutral stretch: a straight
- * void → ember leg spent its first half around #553014, the muddiest frame on
- * the page. Holding the transit low and warm reads as metal heating, and the
- * rise to full ember happens in the saturated half. (Upstream #41.)
- *
- * Mirrors --ramp-0…5 in tokens.css. Keep the two in sync.
- */
-export const RAMP_HEX = [
-    "#F3EEDD", // warm stock
-    "#F6F4EE", // a whiter sheet
-    "#F3EEDD", // warm stock
-    "#E9E7DF", // newsprint
-    "#EFE4C2", // a yellowed sheet
-    "#F3EEDD", // warm stock
-] as const
-
-export const RAMP: RGB[] = RAMP_HEX.map(hexToRgb)
 
 /**
  * Paper texture (Q20). Every surface has the fibre tile multiplied over it at
- * some opacity, which darkens the stock the type actually sits on. The sweep
- * must measure THAT, not the flat hex, or a dim tone measured at 4.6:1 on
- * the hex reads at 4.3:1 on the page. Charged at the tile's mean (printed by
- * scripts/make-paper-texture.ts): a single fibre under a letter is too thin
- * to change what the eye reads.
+ * some opacity, which darkens the stock the type actually sits on. Charged at
+ * the tile's mean (printed by scripts/make-paper-texture.ts).
  */
 export const TEXTURE_MEAN = 245.7
 
-/** Each surface's texture opacity — must match the CSS that applies it. */
+/** Each surface's texture opacity — must match --texture-* in tokens.css. */
 export const TEXTURE_ON = {
     sheet: 0.45, // .tc-sector::after, paper.css
     desk: 0.5, // .tc-stage::before, stage.css
     ruler: 1, // .tabs background-blend-mode: multiply, NotebookChrome.astro
+    card: 0.45, // under the sheet's texture
 } as const
 
 /** A colour as it reads with the tile multiplied over it at `opacity`. */
@@ -187,53 +77,44 @@ export function textured(c: RGB, opacity: number): RGB {
     return [Math.round(c[0] * k), Math.round(c[1] * k), Math.round(c[2] * k)]
 }
 
-/**
- * The tint of a stock that is printed with texture: `bg` is still the flat
- * stock (the texture is a layer over it), but the foreground and the dim are
- * derived from — and `rgb`/`lum` report — the textured colour.
- */
-export function tintTextured(c: RGB, opacity: number): Tint {
-    const t = textured(c, opacity)
-    const L = luminance(...t)
-    const dark = L < FLIP
-    const fgChannel = dark ? 255 : 0
-    return {
-        bg: rgbToCss(c),
-        fg: dark ? "#FFFFFF" : "#000000",
-        dim: rgbToCss(pickDim(t, fgChannel, L)),
-        rgb: t,
-        lum: L,
+/** A theme's roles, as in Figma's "Theme" collection. Alpha where it has one. */
+export interface Theme {
+    surface: { desk: string; sheet: string; ruler: string; card: string }
+    text: {
+        accent: string // text/title, text/body
+        ink: string // text/hand
+        muted: string // text/muted
+        subtle: string // text/subtle
+        mark: string // mark/accent
+        index: [string, number] // text/index
+        hint: [string, number] // text/placeholder
     }
 }
 
-/**
- * The desk the sheets lie on (Q19): a darker shade of the warm stock, under
- * graph paper. The index, wordmark and page number are printed on the desk,
- * not on a sheet, so `:root` carries these values and every sheet overrides
- * them with its own. Mirrors --desk in tokens.css. Measured by the sweep: the
- * ink and the red must both clear 4.5:1 here too.
- */
-export const DESK_HEX = "#EAE4D2"
-
-/** The index column is a ruler laid on the desk: the whiter sheet's stock. */
-export const RULER_HEX = "#F6F4EE"
-
-/** The one red (`--riso-red`). Kept here so the sweep can measure it. */
-export const RED_HEX = "#B5371F"
-
-/** A flat surface's derived foreground, texture included. */
-export function tintOf(hex: string, opacity = 0): Tint {
-    return tintTextured(hexToRgb(hex), opacity)
-}
-
-/**
- * The stock of sheet `i` of `n`. Each sheet now carries ONE colour of its
- * own — two are on screen at once while the top one slides, so the old
- * single interpolated stage colour cannot be right for both (Q19). The
- * sheets sample the same ramp at evenly spaced points, so the read still
- * travels warm → white → newsprint → yellow → warm. Measured with the
- * sheet's texture on.
- */
-export function sheetTint(i: number, n: number, stops: RGB[] = RAMP): Tint {
-    return tintTextured(sampleRamp(stops, n <= 1 ? 0 : i / (n - 1)), TEXTURE_ON.sheet)
+/** Mirrors tokens.css. Light: blue on pale blue paper. Dark: cardboard on a cutting mat. */
+export const THEME: Record<"light" | "dark", Theme> = {
+    light: {
+        surface: { desk: "#EEF3FB", sheet: "#F7FAFF", ruler: "#F8FBFF", card: "#FBFDFF" },
+        text: {
+            accent: "#1A52B5",
+            ink: "#0F2149",
+            muted: "#5B6478",
+            subtle: "#737C90",
+            mark: "#2C66E0",
+            index: ["#5B6478", 0.5],
+            hint: ["#737C90", 0.7],
+        },
+    },
+    dark: {
+        surface: { desk: "#1C3329", sheet: "#4A3D2C", ruler: "#172A22", card: "#56483A" },
+        text: {
+            accent: "#D3E4BE",
+            ink: "#F1EADA",
+            muted: "#C2BFA8",
+            subtle: "#A29E86",
+            mark: "#E8BE72",
+            index: ["#C2BFA8", 0.6],
+            hint: ["#A29E86", 0.8],
+        },
+    },
 }

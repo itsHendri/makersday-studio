@@ -32,7 +32,7 @@
     background-image: url("../assets/textures/paper.png");
     background-size: 512px 512px;
     mix-blend-mode: multiply;
-    opacity: 0.45; /* TEXTURE_ON.sheet — the sweep charges the stock for it */
+    opacity: var(--texture-sheet); /* TEXTURE_ON.sheet — the sweep charges the stock for it */
 }
 
 /* ── Page furniture (per spread) ───────────────────────────────────────── */

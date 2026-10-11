@@ -98,6 +98,8 @@ check. The agent tab ran no rAF while the pane was hidden.
 
 ## Next — Hendri's
 
+- **2026-10-11:** blue light theme and cardboard-on-the-mat dark mode are in the code (Q27), with Hendri's Figma removals. Not committed yet.
+
 0. **Before sharing:** a Formspree or Web3Forms endpoint for the signup
    sheet (`src/content/signup.ts`). The photos and the link preview are in.
 1. **⌘P the pile.** How long a page rests (HOLD, 35% of its scroll), how far

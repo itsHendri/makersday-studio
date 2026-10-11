@@ -1,9 +1,9 @@
 /**
  * Notebook chrome — what the notebook itself can carry.
  *
- * Three subscribers to the `tc:scroll` bus: the index tabs on the ruler down
- * the right, the page number in the corner, and the "back to the top"
- * release on the back cover. None of them recompute scroll position — they
+ * Subscribers to the `tc:scroll` bus: the index tabs on the ruler down the
+ * right and the page number in the corner. ("Back to the top" on the back
+ * cover was removed in Q27.) None of them recompute scroll position — they
  * read the page on top from the bus — and all of them bind their type to
  * `--tc-fg` / `--tc-fg-dim`, measured for the surface they sit on.
  *
@@ -166,47 +166,4 @@ export function initPageCounter(options: PageCounterOptions): () => void {
 
     window.addEventListener("tc:scroll", onScroll)
     return () => window.removeEventListener("tc:scroll", onScroll)
-}
-
-/* ═══════════════════════════════════════════════ back to the top ═══ */
-
-export interface CloseButtonOptions {
-    button: HTMLElement
-}
-
-/**
- * The release at the end. memory-lane never ported its EJECT / RE-READ end
- * state and its STATUS noted the reader was "abandoned, not released". Since
- * Q21 it is printed on the back cover: once the last sheet has gone, "back to
- * the top" puts the pile back together. It is shown only then, so it is
- * never a "skip to end" in disguise — and while hidden it cannot take focus.
- */
-export function initCloseButton(options: CloseButtonOptions): () => void {
-    const { button } = options
-    let shown = false
-
-    const onScroll = (e: Event) => {
-        const d = (e as CustomEvent).detail
-        if (!d) return
-        // The back cover is showing: the last sheet is most of the way off.
-        // On the vertical read there is no pile, so read progress decides.
-        const complete =
-            window.innerWidth > 810 ? (d.end ?? 0) >= 0.9 : (d.p ?? 0) >= 0.985
-        if (complete === shown) return
-        shown = complete
-        button.hidden = !complete
-    }
-
-    const onClick = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" })
-        button.blur()
-    }
-
-    button.hidden = true
-    button.addEventListener("click", onClick)
-    window.addEventListener("tc:scroll", onScroll)
-    return () => {
-        button.removeEventListener("click", onClick)
-        window.removeEventListener("tc:scroll", onScroll)
-    }
 }

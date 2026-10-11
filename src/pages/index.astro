@@ -53,7 +53,6 @@ const SPREADS = TITLES.length
         <div class="tc-stage" id="tc-stage">
             <BackCover />
             <div class="tc-strip" id="tc-strip">
-                <div class="crop" aria-hidden="true"></div>
                 <Spread00 />
                 <Spread01 />
                 <Spread02 />
@@ -101,7 +100,6 @@ const SPREADS = TITLES.length
     import {
         initProgressRail,
         initPageCounter,
-        initCloseButton,
         initFocusFollow,
     } from "~/lib/chrome"
 
@@ -133,6 +131,4 @@ const SPREADS = TITLES.length
     const page = byId("tc-page")
     if (page) initPageCounter({ root: page, sectors: spreads })
 
-    const close = byId("tc-close")
-    if (close) initCloseButton({ button: close })
 </script>

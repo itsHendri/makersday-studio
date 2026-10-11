@@ -13,8 +13,9 @@ Hendri's "Zine" Pinterest board: white stock, riso inks, misregistered
 headlines were the first reading; the chosen direction is **exploration 02,
 the typewriter** (Q12), since retyped from Hendri's Figma cover (Q24):
 Amatic SC titles, Inter body, Courier Prime labels, Special Elite captions,
-Caveat notes; warm stock, one red, colour scans with tape, the index as a
-ruler down the right.
+Caveat notes; colour scans with tape, the index as a ruler down the right.
+Colour (Q27): blue on pale blue paper, and a dark mode of cardboard sheets on
+a green cutting mat — from the Figma "Theme" variables, Light and Dark.
 
 This is a **fork of `~/Development/memory-lane`** (SECTOR READ). The scroll
 rig, stage layout, derived-colour tokens and the type-system shape are lifted
@@ -36,23 +37,27 @@ those files. Our own `DECISIONS.md` records only what is NEW here, as
 - **Nothing after the scroll track** — a section below it scrolls the pinned
   stage off the top. The back cover (colophon, credits) lives INSIDE the
   stage, under the pile (upstream #36, Q21).
-- **Type binds only to `--tc-fg` / `--tc-fg-dim` / `--tc-field`**, never to
-  `--ink` or a static grey. They are scoped per surface: `:root` = the desk,
-  each sheet its own stock (set by the rig from `sheetTint`), the ruler its
-  own. The dim tone is measured WITH the paper texture on (Q20). Verify
-  with `node scripts/sweep-contrast.ts` — it covers desk, ruler and all
-  fourteen sheets.
+- **Colour comes from roles, never a literal.** Type binds to `--tc-accent`
+  (titles, body), `--tc-fg` (ink: notes, borders), `--tc-fg-dim`,
+  `--tc-fg-index`, `--tc-fg-hint`, on `--tc-bg` / `--tc-field`; marks use
+  `--mark`. Every value is in `tokens.css`, twice (Light, Dark), named after
+  the Figma variable's code syntax (Q27). Change a colour in Figma's Theme
+  collection AND `tokens.css` AND `THEME` in `contrast.ts`, then run
+  `node scripts/sweep-contrast.ts` (both themes, texture charged).
 - **The pile's arithmetic lives in `src/lib/pile.ts`** and nowhere else; the
   rig and the chrome both import it. Read the page from `detail.page`, never
   from `floor(p × n)` (Q19).
 - **Texture belongs to a surface, never to the viewport.** There is no fixed
   grain any more: sheets move. Change `TEXTURE_ON` in `contrast.ts` when you
-  change a texture opacity in CSS, and `TEXTURE_MEAN` when you regenerate
+  change `--texture-*` in `tokens.css`, and `TEXTURE_MEAN` when you regenerate
   the tile (Q20).
-- **`RAMP_HEX` in `contrast.ts` and `--ramp-0…5` in `tokens.css` must match.**
-- **One red on the page, `#B5371F`, and it clears 4.5:1 on every stock and
-  on the desk, texture included** so it may carry the tab numbers and stamps. No blue on the page in this
-  direction; the riso tokens stay declared for a later issue (Q12).
+- **`THEME` in `contrast.ts` and `tokens.css` must match.**
+- **No red any more.** What the red ribbon did is `--mark`: blue in light
+  (`#2C66E0`), brass in dark, and it clears 4.5:1 on the sheet, texture
+  included. Faint alphas live in the tokens, not as `opacity` (Q27).
+- **Dark mode is `prefers-color-scheme`**, or `data-theme` on `<html>`. The
+  desk's SVG tiles (ruler ticks, major grid) carry a baked stroke, so each
+  theme has its own `--svg-ticks` / `--svg-major`.
 - **The scroll track stops short of the 48px gutter on the RIGHT**
   (`--gutter`, Q14/Q16). The gutter is the index, drawn as a ruler (Q20); its
   ticks and the desk's left ruler share one phase derived from the sheet
