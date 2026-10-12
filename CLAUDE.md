@@ -126,6 +126,7 @@ node scripts/sweep-contrast.ts
   last. Never give a phone-layout ancestor of the strip `overflow` other
   than visible, or the sheets stop pinning (upstream #14).
 - **The signup form is not connected** until `endpoint` is set in
-  `src/content/signup.ts` (Formspree or Web3Forms).
+  `src/content/signup.ts` (Formspree or Web3Forms). Until then the cover
+  shows no "+" (Q31); setting the endpoint brings it back.
 - "Quarta = Wednesday" is a reading of the name, not a brief. Easy to change
   in `NotebookChrome.astro` (wordmark) and the spread eyebrows.

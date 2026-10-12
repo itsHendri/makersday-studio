@@ -119,11 +119,16 @@ export function initProgressRail(options: ProgressRailOptions): () => void {
         if (d) paint(d.page ?? 0)
     }
 
-    const jump = (i: number) => jumpToSector(i)
+    // The one place a page change is announced (Q31): the reader asked for it.
+    const announce = document.querySelector<HTMLElement>("[data-rail-announce]")
+    const jump = (i: number, label: string) => {
+        jumpToSector(i)
+        if (announce) announce.textContent = label
+    }
 
     const onClick = (e: Event) => {
         const btn = (e.target as HTMLElement).closest<HTMLElement>("[data-cell]")
-        if (btn) jump(Number(btn.dataset.cell))
+        if (btn) jump(Number(btn.dataset.cell), btn.getAttribute("aria-label") ?? "")
     }
 
     cellsEl?.addEventListener("click", onClick)

@@ -909,3 +909,45 @@ Hendri's review of dark mode, 2026-10-11:
   Now the canvas is retinted to the current ink when it is painted back, and
   whenever the theme changes (`prefers-color-scheme` or `data-theme`): a
   `source-in` fill over the strokes.
+
+### Q31. The UI audit, 2026-10-11
+
+The audit's P2 and P3 fixes, and the "+" hidden until the form is connected.
+
+- **The "+" is hidden** while `SIGNUP.endpoint` is null. It opened a sheet
+  that could not send, and the site is being shared with friends now.
+  `People.astro` renders it only once the endpoint is set. When it returns,
+  its "join us" label is always shown on a phone, where nothing hovers.
+- **The signup sheet is Hendri's "A place at the table"** (Figma 60:1789):
+  - his title and intro;
+  - Your name, Your email, and "What would you bring or make? · optional",
+    labelled in Inter 13 and written on a rule;
+  - the outlined "Request an invitation →" button, on the left.
+
+  Name and email are both checked. Each error says what to do, under its
+  field. The textarea lost its side bar too (as in Q30). Figma's photograph
+  is not on the sheet: it is a dialog over the pile, not a page.
+- **Faint text has a 3:1 floor**, and the sweep enforces it:
+  - the unselected index numbers (`text/index`, light) go from 0.5 to 0.75
+    alpha: 2.05 to 3.17:1;
+  - placeholders (`text/placeholder`, light) go from 0.7 to 0.85: 2.40 to
+    3.03:1;
+  - dark already cleared it (3.94 and 3.09);
+  - the Figma primitives are renamed `alpha/slate600-75` and
+    `alpha/slate500-85`.
+- **The lightbox is a native `<dialog>`.** `showModal()` keeps focus inside
+  it and makes the page behind inert; before, Tab walked out of the overlay
+  into the page. As with the signup sheet, the cleanup and the focus return
+  run directly from `close()`, not only from the dialog's `close` event.
+  That event never arrived in the agent's hidden tab.
+- **The page number is no longer a live region.** It read out every page
+  while scrolling. A jump from the index is announced instead, by a
+  visually hidden status line ("Page 5: Bad drawings first").
+- **The faces are not tab stops.** Focusing one only showed the name its alt
+  text already gives.
+- **P3 tidy-ups:**
+  - "kept on this device" next to the clear button, on the site and in Figma
+    (Wordmark style, `text/muted`), so a visitor knows their page saves;
+  - the desk's clear button is at least 32px tall;
+  - hover fades ease out instead of running linear;
+  - the sticker's 3px radius is 2px, like every other card.

@@ -1,6 +1,6 @@
 /**
- * The signup sheet (Q25): opening it from the cover's "+", checking the
- * email, and sending to the form service — without leaving the page.
+ * The signup sheet (Q25, Q31): opening it from the cover's "+", checking the
+ * name and email, and sending to the form service — without leaving the page.
  *
  * Sent with fetch and `Accept: application/json`, which both Formspree and
  * Web3Forms answer with JSON instead of redirecting to their own thank-you
@@ -12,8 +12,8 @@ export function initSignup(): () => void {
     const dialog = document.getElementById("tc-signup") as HTMLDialogElement | null
     if (!dialog || typeof dialog.showModal !== "function") return () => {}
     const form = dialog.querySelector<HTMLFormElement>("form")!
+    const name = form.querySelector<HTMLInputElement>('input[name="name"]')!
     const email = form.querySelector<HTMLInputElement>('input[name="email"]')!
-    const emailError = form.querySelector<HTMLElement>('[data-error-for="email"]')!
     const status = form.querySelector<HTMLElement>("[data-status]")!
     const send = form.querySelector<HTMLButtonElement>("[data-signup-send]")!
     const endpoint = form.dataset.endpoint || ""
@@ -31,13 +31,19 @@ export function initSignup(): () => void {
         e.preventDefault()
         opener = trigger
         dialog.showModal()
-        email.focus()
+        name.focus()
     }
-    const close = () => dialog.close()
-
     // Focus goes back to the "+" it came from, so a keyboard user is where
-    // they were on the cover.
-    const onClose = () => opener?.focus()
+    // they were on the cover. Run by close() and again by the dialog's own
+    // "close" event (Escape); the second run finds nothing to do.
+    const onClose = () => {
+        opener?.focus()
+        opener = null
+    }
+    const close = () => {
+        dialog.close()
+        onClose()
+    }
 
     // A click on the backdrop (the dialog element itself, outside the sheet)
     // closes it, like the lightbox.
@@ -45,41 +51,48 @@ export function initSignup(): () => void {
         if (e.target === dialog) close()
     }
 
-    const checkEmail = (): boolean => {
-        const value = email.value.trim()
-        let message = ""
-        if (!value) message = "an email, so we can write back"
-        else if (!email.checkValidity()) message = "that doesn't look like an email"
-        emailError.textContent = message
-        emailError.hidden = !message
-        email.setAttribute("aria-invalid", message ? "true" : "false")
-        if (message) email.setAttribute("aria-describedby", "tc-signup-email-error")
-        else email.removeAttribute("aria-describedby")
+    // Each required field says what it needs, under itself (Q31).
+    const problem = (field: HTMLInputElement): string => {
+        const value = field.value.trim()
+        if (field === name) return value ? "" : "Add a name, so we know who to expect."
+        if (!value) return "Add an email, so we can write back."
+        return field.checkValidity() ? "" : "That email looks incomplete. Check for the @ and the part after it."
+    }
+    const check = (field: HTMLInputElement): boolean => {
+        const error = form.querySelector<HTMLElement>(`[data-error-for="${field.name}"]`)!
+        const message = problem(field)
+        error.id = `tc-signup-${field.name}-error`
+        error.textContent = message
+        error.hidden = !message
+        field.setAttribute("aria-invalid", message ? "true" : "false")
+        if (message) field.setAttribute("aria-describedby", error.id)
+        else field.removeAttribute("aria-describedby")
         return !message
     }
-    emailError.id = "tc-signup-email-error"
 
     const onSubmit = async (e: SubmitEvent) => {
         e.preventDefault()
         say("")
-        if (!checkEmail()) {
-            email.focus()
+        const nameOk = check(name)
+        const emailOk = check(email)
+        if (!nameOk || !emailOk) {
+            ;(nameOk ? email : name).focus()
             return
         }
         const data = new FormData(form)
         // The spam trap: a person never fills these in.
         if (data.get("_gotcha") || data.get("botcheck")) {
-            say("thank you — we'll write back.", "ok")
+            say("Thank you — we'll write back.", "ok")
             return
         }
         data.delete("_gotcha")
         data.delete("botcheck")
         if (!endpoint) {
-            say("not connected yet — nothing was sent.", "error")
+            say("Not connected yet — nothing was sent.", "error")
             return
         }
         send.disabled = true
-        say("sending…")
+        say("Sending…")
         try {
             const res = await fetch(endpoint, {
                 method: "POST",
@@ -91,16 +104,18 @@ export function initSignup(): () => void {
             const ok = res.ok && body.ok !== false && body.success !== false
             if (!ok) throw new Error(String(body.message ?? body.error ?? res.status))
             form.reset()
-            say("thank you — we'll write back.", "ok")
+            say("Thank you — we'll write back soon.", "ok")
         } catch {
-            say("that didn't send. try again in a minute?", "error")
+            say("That didn't send. Check your connection and try again.", "error")
         } finally {
             send.disabled = false
         }
     }
 
-    const onEmailInput = () => {
-        if (email.getAttribute("aria-invalid") === "true") checkEmail()
+    // Once a field has been flagged, it clears itself as soon as it is right.
+    const onInput = (e: Event) => {
+        const field = e.target as HTMLInputElement
+        if ((field === name || field === email) && field.getAttribute("aria-invalid") === "true") check(field)
     }
 
     const closeBtn = form.querySelector<HTMLElement>("[data-signup-close]")
@@ -109,7 +124,7 @@ export function initSignup(): () => void {
     dialog.addEventListener("close", onClose)
     dialog.addEventListener("click", onDialogClick)
     form.addEventListener("submit", onSubmit)
-    email.addEventListener("input", onEmailInput)
+    form.addEventListener("input", onInput)
 
     return () => {
         document.removeEventListener("click", open)
@@ -117,6 +132,6 @@ export function initSignup(): () => void {
         dialog.removeEventListener("close", onClose)
         dialog.removeEventListener("click", onDialogClick)
         form.removeEventListener("submit", onSubmit)
-        email.removeEventListener("input", onEmailInput)
+        form.removeEventListener("input", onInput)
     }
 }

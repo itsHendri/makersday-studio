@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets"
 import { PEOPLE, JOIN_LABEL, portraitUrl } from "~/content/people"
+import { SIGNUP } from "~/content/signup"
 
 /*
  * The three of us, on the cover (Q24) — Hendri's Figma cover, as drawn:
@@ -8,16 +9,21 @@ import { PEOPLE, JOIN_LABEL, portraitUrl } from "~/content/people"
  * 16px after the stack that opens the signup sheet (Q25). Hovering or focusing a face shows its name in a
  * dark pill just under it.
  *
- * Each face is focusable, so the names are reachable from the keyboard as
- * well as the pointer; the name is also the photo's alt text, so a screen
- * reader gets it without the tooltip (which is aria-hidden).
+ * The name is the photo's alt text, so a screen reader has it without the
+ * tooltip (aria-hidden). The faces are not tab stops (Q31): focusing one did
+ * nothing but show a name the alt text already gives.
+ *
+ * The "+" only appears once the form is connected (SIGNUP.endpoint, Q31):
+ * until then it led to a sheet that could not send. On a phone, where
+ * nothing hovers, its "join us" label is always shown.
  */
+const joinable = !!SIGNUP.endpoint
 ---
 
 <ul class="people" aria-label="The three of us">
     {
         PEOPLE.map((p) => (
-            <li class="person" tabindex="0">
+            <li class="person">
                 {typeof p.photo === "string" ? (
                     <Image
                         src={portraitUrl(p.photo)}
@@ -35,11 +41,13 @@ import { PEOPLE, JOIN_LABEL, portraitUrl } from "~/content/people"
             </li>
         ))
     }
-    <li class="join">
-        {/* Opens the signup sheet (SignupSheet.astro, Q25). */}
-        <button type="button" class="join-mark" data-signup-open aria-haspopup="dialog" aria-label="Join us: sign up">+</button>
-        <span class="tip" aria-hidden="true">{JOIN_LABEL}</span>
-    </li>
+    {joinable && (
+        <li class="join">
+            {/* Opens the signup sheet (SignupSheet.astro, Q25). */}
+            <button type="button" class="join-mark" data-signup-open aria-haspopup="dialog" aria-label="Join us: sign up">+</button>
+            <span class="tip" aria-hidden="true">{JOIN_LABEL}</span>
+        </li>
+    )}
 </ul>
 
 <style>
@@ -74,17 +82,12 @@ import { PEOPLE, JOIN_LABEL, portraitUrl } from "~/content/people"
         border: 2px solid var(--white);
         box-shadow: 0 2px 7px rgb(var(--shadow-rgb) / 0.18);
     }
-    .person:hover,
-    .person:focus-visible {
+    .person:hover {
         z-index: 2; /* the face being named comes to the front of the stack */
     }
-    .person:focus-visible img,
     .join-mark:focus-visible {
         outline: 2px solid var(--tc-fg);
         outline-offset: 2px;
-    }
-    .person:focus-visible {
-        outline: none;
     }
 
     .join-mark {
@@ -103,7 +106,7 @@ import { PEOPLE, JOIN_LABEL, portraitUrl } from "~/content/people"
         text-decoration: none;
         cursor: pointer;
         padding: 0;
-        transition: background-color 140ms linear;
+        transition: background-color 140ms ease-out;
     }
     .join-mark:hover {
         background: var(--paper);
@@ -130,11 +133,10 @@ import { PEOPLE, JOIN_LABEL, portraitUrl } from "~/content/people"
         opacity: 0;
         transform: translate(-50%, -4px);
         transition:
-            opacity 140ms linear,
+            opacity 140ms ease-out,
             transform 180ms cubic-bezier(0.22, 0.61, 0.36, 1);
     }
     .person:hover .tip,
-    .person:focus-visible .tip,
     .join:hover .tip,
     .join:focus-within .tip {
         opacity: 1;
@@ -143,6 +145,13 @@ import { PEOPLE, JOIN_LABEL, portraitUrl } from "~/content/people"
     @media (prefers-reduced-motion: reduce) {
         .tip {
             transition: none;
+        }
+    }
+    /* Nothing hovers on a phone: the "+" says what it is, always. */
+    @media (max-width: 810px) {
+        .join .tip {
+            opacity: 1;
+            transform: translate(-50%, 0);
         }
     }
 </style>

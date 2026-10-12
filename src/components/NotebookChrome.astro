@@ -49,9 +49,13 @@ const { sectors = 12, titles } = Astro.props
 </nav>
 
 <!-- ── Page number ────────────────────────────────────────────────────── -->
-<div class="page" id="tc-page" aria-live="polite" data-page="0">
+{/* Not a live region (Q31): it changes on every page while scrolling, and
+    a screen reader would read each one out. A jump from the index is
+    announced instead, by the status line below. */}
+<div class="page" id="tc-page" data-page="0">
     <span data-page>p. 1</span>
 </div>
+<p class="visually-hidden" role="status" data-rail-announce></p>
 
 <style>
     /* ── Tabs ───────────────────────────────────────────────────────── */
@@ -127,7 +131,7 @@ const { sectors = 12, titles } = Astro.props
         letter-spacing: 0.08em;
         /* text/index: half-strength numbers, the alpha in the token (Q27). */
         color: var(--tc-fg-index);
-        transition: color 160ms linear;
+        transition: color 160ms ease-out;
     }
     .tab[data-state="reading"] {
         font-weight: 700;
@@ -150,7 +154,7 @@ const { sectors = 12, titles } = Astro.props
         color: var(--tc-fg);
         opacity: 0;
         pointer-events: none;
-        transition: opacity 160ms linear;
+        transition: opacity 160ms ease-out;
     }
     .tab:hover .tab-title,
     .tab:focus-visible .tab-title {

@@ -75,20 +75,15 @@ const SPREADS = TITLES.length
     <SignupSheet />
 
     {/* A clipping held up to the light, over everything else. */}
-    <div
-        class="lightbox"
-        id="tc-lightbox"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Clipping, enlarged"
-        hidden
-    >
+    {/* A native <dialog> (Q31): showModal() holds focus inside it, makes the
+        page behind inert and closes on Escape — like the signup sheet. */}
+    <dialog class="lightbox" id="tc-lightbox" aria-label="Clipping, enlarged">
         <button type="button" class="lightbox-close t-label" data-lb-close>close ✕</button>
         <figure class="lightbox-figure">
             <img alt="" />
             <figcaption></figcaption>
         </figure>
-    </div>
+    </dialog>
 </Base>
 
 <script>
@@ -119,7 +114,7 @@ const SPREADS = TITLES.length
     initNotebook()
     initSignup()
 
-    const lightbox = byId("tc-lightbox")
+    const lightbox = byId("tc-lightbox") as HTMLDialogElement | null
     if (lightbox) initLightbox({ root: lightbox })
 
     const rail = byId("tc-rail")
