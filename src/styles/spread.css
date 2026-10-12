@@ -320,13 +320,18 @@
     align-items: center;
     gap: 8px;
 }
+/* "Kept on this device": the pages save as you go, and say so (Q31). */
+.notebook-kept {
+    margin: 0; /* the eyebrow preset is Figma's Wordmark style, as drawn */
+}
 .notebook-tools button {
-    padding: 6px 10px;
+    min-height: 32px; /* a pointer target on the desk; 44px on a phone */
+    padding: 6px 14px;
     border: 1.5px solid var(--tc-accent);
     border-radius: 2px;
     color: var(--tc-accent);
     background: var(--card); /* surface/card, as drawn (Q18); cardboard in the dark */
-    transition: background-color 140ms linear;
+    transition: background-color 140ms ease-out;
 }
 .notebook-tools button:hover {
     background: color-mix(in srgb, var(--tc-accent) 12%, var(--card));
@@ -334,18 +339,30 @@
 
 /* ── Lightbox ──────────────────────────────────────────────────────────── */
 
+/* A native <dialog> in the top layer (Q31). The UA styles are undone so it
+ * fills the viewport; the dialog itself is the tinted backdrop, so a click
+ * on it (outside the figure) closes. */
 .lightbox {
     position: fixed;
     inset: 0;
-    z-index: 9; /* over the chrome (6) */
-    display: grid;
-    place-items: center;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
     padding: 48px;
     background: color-mix(in srgb, var(--tc-field) 94%, transparent);
+    color: inherit;
     cursor: zoom-out;
 }
-.lightbox[hidden] {
-    display: none;
+.lightbox[open] {
+    display: grid;
+    place-items: center;
+}
+.lightbox::backdrop {
+    background: transparent;
 }
 .lightbox-figure {
     margin: 0;

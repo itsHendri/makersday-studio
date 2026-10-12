@@ -101,8 +101,8 @@ export const THEME: Record<"light" | "dark", Theme> = {
             muted: "#5B6478",
             subtle: "#737C90",
             mark: "#2C66E0",
-            index: ["#5B6478", 0.5],
-            hint: ["#737C90", 0.7],
+            index: ["#5B6478", 0.75],
+            hint: ["#737C90", 0.85],
         },
     },
     dark: {

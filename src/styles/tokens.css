@@ -45,8 +45,8 @@
     --tick: rgb(var(--line-rgb) / 0.5); /* line/ruler */
     --crop: rgb(var(--line-rgb) / 0.45); /* line/crop */
     --dashed: rgb(var(--line-rgb) / 0.4); /* border/dashed — the "+" */
-    --tc-fg-index: rgb(91 100 120 / 0.5); /* text/index — unselected tabs */
-    --tc-fg-hint: rgb(115 124 144 / 0.7); /* text/placeholder */
+    --tc-fg-index: rgb(91 100 120 / 0.75); /* text/index — unselected tabs, 3:1 (Q31) */
+    --tc-fg-hint: rgb(115 124 144 / 0.85); /* text/placeholder, 3:1 (Q31) */
     --emboss: rgb(var(--line-rgb) / 0.08); /* text/emboss — the back cover's wordmark */
     --emboss-edge: rgb(255 255 255 / 0.07); /* the light catching the pressed edge */
     --shadow-rgb: 10 26 60; /* shadows are navy, in both themes */
