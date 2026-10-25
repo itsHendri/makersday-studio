@@ -951,3 +951,107 @@ The audit's P2 and P3 fixes, and the "+" hidden until the form is connected.
   - the desk's clear button is at least 32px tall;
   - hover fades ease out instead of running linear;
   - the sticker's 3px radius is 2px, like every other card.
+
+### Q32. Maker's Day Studio: a new name, a shorter story, and a hybrid to compare
+
+On 2026-10-25 Hendri renamed the project and asked for the story to follow
+mill.pt's content and muralia.at's interaction.
+
+**The name.** Quarta Collective is now Maker's Day Studio (makersday.studio,
+not yet bought). It is a creative studio that makes things, takes on
+projects and collaborations, and meets for a making day. For now it works
+across Hendri's home design studio and a friend's office full of 3D
+printers. The name changed:
+
+- in the wordmark, the page title and the site name;
+- on the back cover and in the signup sheet's subject line;
+- in Figma's Wordmark component, which updates all 47 places it appears,
+  the exploration pages included.
+
+**The story** is no longer about three friends, Wednesdays or the notebook
+being made. It is about making itself, following the stages of making and
+ending with an invitation: why we make, how making works, then your turn.
+
+- 14 sheets became 10:
+  1. The art of making
+  2. Awareness
+  3. Write it down (yours)
+  4. Trust the process
+  5. Draw it out (yours)
+  6. Any material
+  7. Anywhere
+  8. Prototype everything
+  9. Again, better
+  10. Make it with us
+- The words live in `src/content/story.ts`, and the index titles and the
+  sheet count come from it.
+- The spreads only place pictures.
+- Rulings stay apart (Q14): ruled, dotted, squared and ruled pages each have
+  a plain page on both sides.
+
+**The visitor's pages** have a headline at full display size. A prompt
+alone did not say the page was there to use. The writing area starts on the
+rule at 92 + 9 × 28 = 344px.
+
+**The faces** moved from the cover to the back cover, with their names.
+
+**Photographs.**
+
+- New subjects: 3D printing, paint, clay, a sculptor, electronics,
+  cardboard models, a home desk, carving, a drill press.
+- Every id was HEAD-checked (Q4).
+- `SOURCES` was rewritten in order of first use, so the four credited on
+  the back cover are the first four pictures.
+
+**The hybrid** (`/hybrid`). Hendri wanted to keep the pile but see a
+Muralia-style version, so it uses the same pile, rig, story and visitor's
+pages.
+
+- Each printed sheet is a grid of panels: a text card, full-bleed photos,
+  a grid of four, and a colour panel carrying one line of the story (the
+  `statement`).
+- The colour panel's pair is the sheet's stock on the accent: the
+  accent/sheet pair the sweep already measures, inverted.
+- Photos in panels are flat. They do not tilt and do not open the lightbox.
+- On a phone the panels stack.
+
+**Pile vs hybrid** is Hendri's choice; the other one is then deleted.
+
+**The shell** moved into `components/Pile.astro`: the desk, index, back
+cover, dialogs and scripts. Both pages pass their sheets through its slot.
+
+**The link preview** is the new cover. It comes from a Figma frame bound to
+the Theme variables: "Link preview — Maker's Day Studio (og:image)".
+
+**Outcome, 2026-10-25: the pile stays.** Hendri compared the two and kept
+the pile, so `/hybrid`, `PanelSheet.astro` and the story's `statement`
+lines are deleted. `Pile.astro` stays as the page's shell.
+
+### Q33. The wordmark goes home; charcoal paper in the dark
+
+Two changes from Hendri, 2026-10-25.
+
+- **"Maker's Day Studio" at the top left is a link back to page 1.**
+  - On the pile it jumps the way an index tab does (`jumpToSector(0)`), and
+    the jump is announced.
+  - Without JS it is an ordinary link to the top.
+  - A ⌘- or ctrl-click is left to the browser.
+- **The dark paper is charcoal, not cardboard.** Hendri liked the green mat
+  but found the brown sheet "slightly off", and asked for a traditional dark
+  colour.
+  - Four greys were laid out in Figma on the cover, the write page and "Any
+    material": Graphite, Charcoal, Slate and Warm grey (section "Dark paper
+    options").
+  - He chose **B — Charcoal**.
+  - Sheet `#232629`, card `#2E3236`, rules `#3D4247`, dots `#43484E`, margin
+    `#555B62`, as new `charcoal/*` primitives behind the Dark mode of
+    `surface/sheet`, `surface/card` and `border/*`.
+  - The mat, the ruler, the moss text and the brass mark are unchanged.
+  - The sweep's lowest required dark value is now muted on the sheet at
+    8.30:1 (was 5.76).
+
+**The repo is renamed** `itsHendri/makersday-studio`, and `base` is
+`/makersday-studio`. GitHub Pages does not redirect the old
+`/quarta-collective/` address, so links already shared stop working. The
+`deploy` script's Cloudflare project name in package.json is left alone: it
+names a Cloudflare project, not the repo.

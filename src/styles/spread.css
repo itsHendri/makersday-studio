@@ -256,7 +256,7 @@
     position: absolute;
     left: 72px;
     right: 72px;
-    top: 232px; /* 92 + 5 × 28: on a rule */
+    top: 344px; /* 92 + 9 × 28: on a rule, under the headline and prompt (Q32) */
     bottom: 104px;
 }
 .notebook-text {
@@ -273,8 +273,7 @@
 }
 .notebook-text:empty::before {
     content: attr(data-placeholder);
-    color: var(--tc-fg-dim);
-    opacity: 0.7;
+    color: var(--tc-fg-hint); /* text/placeholder, 3:1 (Q31) */
     pointer-events: none;
 }
 .notebook-ink {
@@ -290,8 +289,7 @@
     position: absolute;
     left: 8px;
     top: 4px;
-    color: var(--tc-fg-dim);
-    opacity: 0.7;
+    color: var(--tc-fg-hint);
     pointer-events: none;
 }
 .notebook.has-ink .notebook-cue {
@@ -308,7 +306,7 @@
 }
 .notebook[data-nb-kind="draw"] .notebook-cue {
     left: 76px;
-    top: 232px;
+    top: 344px;
 }
 .notebook-tools {
     z-index: 1; /* over the edge-to-edge canvas */
@@ -330,7 +328,7 @@
     border: 1.5px solid var(--tc-accent);
     border-radius: 2px;
     color: var(--tc-accent);
-    background: var(--card); /* surface/card, as drawn (Q18); cardboard in the dark */
+    background: var(--card); /* surface/card, as drawn (Q18); charcoal in the dark */
     transition: background-color 140ms ease-out;
 }
 .notebook-tools button:hover {

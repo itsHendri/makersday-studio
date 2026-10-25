@@ -1,28 +1,51 @@
 ---
 import Clipping from "~/components/Clipping.astro"
+import { STORY } from "~/content/story"
 
-/* Spread 06 — the argument. */
+/* Spread 06 — Anywhere — the places it happens. Squared stock: plain pages on both sides (Q14). The words are in content/story.ts (Q32). */
+const page = STORY[6]!
+const [plain, lean] = page.title
 ---
 
-<section class="tc-sector" id="tc-sector-06" aria-label="Page 6: What are we actually making?">
+<section class="tc-sector is-squared" id="tc-sector-06" aria-label={`Page 7: ${page.tab}`}>
+    <h2 class="spread-title t-display" data-reveal>{plain && `${plain} `}<em>{lean}</em></h2>
 
-    <h2 class="spread-title t-display" data-reveal>What are we actually <em>making?</em></h2>
-
-    <p class="spread-note t-body">
-        The argument lasted most of an evening. A lamp. A chair. An app,
-        briefly. Then someone said: the thing we keep reaching for is a
-        notebook. So make one — half printed, half blank.
-    </p>
+    <p class="spread-note t-body">{page.body}</p>
 
     <Clipping
         id="06-0"
-        src="mug"
-        caption="the evening in question"
-        x={820}
-        y={340}
+        src={page.photos[0].src}
+        caption={page.photos[0].caption}
+        x={760}
+        y={120}
         w={440}
         h={290}
         kind="scan"
+        rotate={-1}
         tape
+    />
+
+    <Clipping
+        id="06-1"
+        src={page.photos[1].src}
+        caption={page.photos[1].caption}
+        x={120}
+        y={470}
+        w={380}
+        h={250}
+        kind="scan"
+        rotate={2}
+    />
+
+    <Clipping
+        id="06-2"
+        src={page.photos[2].src}
+        caption={page.photos[2].caption}
+        x={600}
+        y={500}
+        w={320}
+        h={230}
+        kind="scan"
+        rotate={-3}
     />
 </section>

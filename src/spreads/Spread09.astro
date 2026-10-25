@@ -1,39 +1,39 @@
 ---
 import Clipping from "~/components/Clipping.astro"
+import { STORY } from "~/content/story"
 
-/* Spread 09 — the first one. Newsprint turning to the yellow sheet. */
+/* Spread 09 — Make it with us — the invitation, before the back cover. The words are in content/story.ts (Q32). */
+const page = STORY[9]!
+const [plain, lean] = page.title
 ---
 
-<section class="tc-sector is-squared" id="tc-sector-09" aria-label="Page 9: Prototype one">
+<section class="tc-sector" id="tc-sector-09" aria-label={`Page 10: ${page.tab}`}>
+    <h2 class="spread-title t-display" data-reveal>{plain && `${plain} `}<em>{lean}</em></h2>
 
-    <h2 class="spread-title t-display" data-reveal>Prototype <em>one</em></h2>
-
-    <p class="spread-note t-body">
-        Eight pages from one sheet, folded, stapled twice, printed in forty
-        minutes. The fold was fine. The staples went through the wrong page.
-    </p>
+    <p class="spread-note t-body">{page.body}</p>
 
     <Clipping
         id="09-0"
-        src="pages"
-        caption="folded, then stapled wrong"
-        x={760}
-        y={340}
-        w={460}
-        h={300}
+        src={page.photos[0].src}
+        caption={page.photos[0].caption}
+        x={700}
+        y={140}
+        w={500}
+        h={330}
         kind="scan"
+        rotate={-1}
         tape
     />
 
     <Clipping
         id="09-1"
-        src="spine"
-        caption="no. 1"
-        x={160}
-        y={490}
-        w={300}
-        h={210}
+        src={page.photos[1].src}
+        caption={page.photos[1].caption}
+        x={200}
+        y={500}
+        w={320}
+        h={220}
         kind="scan"
-        rotate={4}
+        rotate={2}
     />
 </section>

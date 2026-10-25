@@ -1,129 +1,41 @@
 ---
-import Base from "~/layouts/Base.astro"
+import Pile from "~/components/Pile.astro"
 import Spread00 from "~/spreads/Spread00.astro"
 import Spread01 from "~/spreads/Spread01.astro"
-import Spread02 from "~/spreads/Spread02.astro"
-import Spread04 from "~/spreads/Spread04.astro"
+import Spread03 from "~/spreads/Spread03.astro"
+import Spread05 from "~/spreads/Spread05.astro"
 import Spread06 from "~/spreads/Spread06.astro"
 import Spread07 from "~/spreads/Spread07.astro"
 import Spread08 from "~/spreads/Spread08.astro"
 import Spread09 from "~/spreads/Spread09.astro"
-import Spread10 from "~/spreads/Spread10.astro"
-import Spread11 from "~/spreads/Spread11.astro"
-import Spread12 from "~/spreads/Spread12.astro"
-import Spread13 from "~/spreads/Spread13.astro"
 import NotebookPage from "~/components/NotebookPage.astro"
-import NotebookChrome from "~/components/NotebookChrome.astro"
-import BackCover from "~/components/BackCover.astro"
-import SignupSheet from "~/components/SignupSheet.astro"
-import { TITLES } from "~/spreads/titles"
-import "~/styles/stage.css"
-import "~/styles/spread.css"
-import "~/styles/paper.css"
+import { STORY } from "~/content/story"
 
 /*
- * The notebook: twelve printed spreads telling the story, and two pages —
- * one to write on, one to draw on — that are the visitor's. A pile of
- * fourteen sheets on a desk; scrolling takes them off one by one, to the
- * left, down to the back cover (Q19, Q21).
+ * Maker's Day Studio (Q32): ten sheets on a desk telling how a thing gets
+ * made — notice, start, use anything, make it anywhere, prototype, do it
+ * again, then make it with us. Two of the ten are the visitor's own: one to
+ * write on, one to draw on. Scrolling takes the sheets off one by one, to
+ * the left, down to the back cover (Q19, Q21). The words are in
+ * content/story.ts.
  *
- * RULINGS NEVER TOUCH. A lined page next to a grid page read as one odd
- * sheet (Hendri, twice), so every ruled, dotted or squared spread has a
- * plain spread on both sides: plain, ruled, plain, ruled, plain, dots,
- * plain, ruled, plain, squared, plain, ruled, plain, ruled.
+ * RULINGS NEVER TOUCH (Q14): every ruled, dotted or squared sheet has a
+ * plain one on both sides — plain, plain, ruled, plain, dots, plain,
+ * squared, plain, ruled, plain.
  *
- * NOTHING MAY COME AFTER THE TRACK — no footer, no colophon section. A section
- * below it keeps scrolling once the read is done and takes the pinned stage
- * off the top of the screen. The colophon is on the back cover, which lives
- * INSIDE the stage, under the pile, for exactly this reason. (memory-lane #36.)
- *
- * `--tc-sectors` drives the track's height ((sheets + 1) × 100vh), so it must
- * match the number of sheets below — and `TITLES` in spreads/titles.ts.
+ * The desk, index, back cover and scripts are in components/Pile.astro.
  */
-
-const SPREADS = TITLES.length
 ---
 
-<Base>
-    {/* The index comes FIRST in the document: it is the only navigation, so a
-        keyboard user reaches it before the 24 clippings, not after. (Q13) */}
-    <NotebookChrome sectors={SPREADS} titles={TITLES} />
-
-    <div class="tc-track" id="tc-track" style={`--tc-sectors:${SPREADS}`}>
-        <div class="tc-stage" id="tc-stage">
-            <BackCover />
-            <div class="tc-strip" id="tc-strip">
-                <Spread00 />
-                <Spread01 />
-                <Spread02 />
-                <NotebookPage n={3} kind="write" key="write-1" prompt="What did you notice this week? Write it down before it stops being interesting." />
-                <Spread04 />
-                <NotebookPage n={5} kind="draw" key="draw-1" prompt="Twenty bad drawings. Start with one." />
-                <Spread06 />
-                <Spread07 />
-                <Spread08 />
-                <Spread09 />
-                <Spread10 />
-                <Spread11 />
-                <Spread12 />
-                <Spread13 />
-            </div>
-        </div>
-    </div>
-
-    {/* The "+" on the cover opens this: a sheet laid on top of the pile. */}
-    <SignupSheet />
-
-    {/* A clipping held up to the light, over everything else. */}
-    {/* A native <dialog> (Q31): showModal() holds focus inside it, makes the
-        page behind inert and closes on Escape — like the signup sheet. */}
-    <dialog class="lightbox" id="tc-lightbox" aria-label="Clipping, enlarged">
-        <button type="button" class="lightbox-close t-label" data-lb-close>close ✕</button>
-        <figure class="lightbox-figure">
-            <img alt="" />
-            <figcaption></figcaption>
-        </figure>
-    </dialog>
-</Base>
-
-<script>
-    import { initScrollRig } from "~/lib/scroll-rig"
-    import { initReveal } from "~/lib/reveal"
-    import { initNotebook } from "~/lib/notebook"
-    import { initLightbox } from "~/lib/lightbox"
-    import { initSignup } from "~/lib/signup"
-    import {
-        initProgressRail,
-        initPageCounter,
-        initFocusFollow,
-    } from "~/lib/chrome"
-
-    const byId = (id: string) => document.getElementById(id)
-    const spreads = Number(
-        getComputedStyle(byId("tc-track")!).getPropertyValue("--tc-sectors")
-    ) || 12
-
-    /*
-     * Everything here is cheap — there is no WebGL, no boot, no audio — so
-     * there is no critical/deferred split any more (memory-lane A20). The
-     * reveal subscribes before the rig's first publish, so the cover's
-     * headline hears it; then the rig, so scroll works from the first frame.
-     */
-    initReveal()
-    initScrollRig()
-    initNotebook()
-    initSignup()
-
-    const lightbox = byId("tc-lightbox") as HTMLDialogElement | null
-    if (lightbox) initLightbox({ root: lightbox })
-
-    const rail = byId("tc-rail")
-    if (rail) initProgressRail({ root: rail, sectors: spreads })
-
-    const strip = byId("tc-strip")
-    if (strip) initFocusFollow({ strip })
-
-    const page = byId("tc-page")
-    if (page) initPageCounter({ root: page, sectors: spreads })
-
-</script>
+<Pile>
+    <Spread00 />
+    <Spread01 />
+    <NotebookPage n={2} kind="write" key={STORY[2]!.notebook!.key} title={STORY[2]!.title} prompt={STORY[2]!.notebook!.prompt} />
+    <Spread03 />
+    <NotebookPage n={4} kind="draw" key={STORY[4]!.notebook!.key} title={STORY[4]!.title} prompt={STORY[4]!.notebook!.prompt} />
+    <Spread05 />
+    <Spread06 />
+    <Spread07 />
+    <Spread08 />
+    <Spread09 />
+</Pile>

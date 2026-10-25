@@ -8,7 +8,7 @@ export default defineConfig({
     // match it exactly (memory-lane A23). A custom domain later means setting
     // `site` to it and dropping `base` to "/".
     site: "https://itshendri.github.io",
-    base: "/quarta-collective",
+    base: "/makersday-studio",
     output: "static",
     image: {
         // Placeholder clippings are Unsplash URLs, optimised to AVIF at build.

@@ -1,0 +1,39 @@
+---
+import Clipping from "~/components/Clipping.astro"
+import { STORY } from "~/content/story"
+
+/* Spread 03 — Trust the process — the ugly stage. The words are in content/story.ts (Q32). */
+const page = STORY[3]!
+const [plain, lean] = page.title
+---
+
+<section class="tc-sector" id="tc-sector-03" aria-label={`Page 4: ${page.tab}`}>
+    <h2 class="spread-title t-display" data-reveal>{plain && `${plain} `}<em>{lean}</em></h2>
+
+    <p class="spread-note t-body">{page.body}</p>
+
+    <Clipping
+        id="03-0"
+        src={page.photos[0].src}
+        caption={page.photos[0].caption}
+        x={780}
+        y={110}
+        w={380}
+        h={470}
+        kind="scan"
+        rotate={2}
+        tape
+    />
+
+    <Clipping
+        id="03-1"
+        src={page.photos[1].src}
+        caption={page.photos[1].caption}
+        x={150}
+        y={480}
+        w={300}
+        h={220}
+        kind="scan"
+        rotate={-3}
+    />
+</section>

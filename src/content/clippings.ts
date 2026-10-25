@@ -1,7 +1,7 @@
 /**
  * Placeholder clippings — Unsplash photographs, by key.
  *
- * These are STAND-INS until the collective's own photographs exist. Each is
+ * These are STAND-INS until the studio's own photographs exist. Each is
  * referenced from a spread by key, so swapping one out is a one-line change
  * here and the colophon's credit list is generated, never hand-maintained.
  *
@@ -26,125 +26,105 @@ export interface ClippingSource {
 }
 
 export const SOURCES = {
-    cover: {
-        id: "photo-1595123336219-5eedd543bc4a",
-        alt: "A brown hardbound notebook on a wooden table",
-        by: "prateekkatyal",
-    },
-    artclass: {
-        id: "photo-1757085242652-f8cd4d3de889",
-        alt: "People working at a shared table in an art class",
-        by: "anya_richter",
-    },
-    table: {
-        id: "photo-1601397210737-a5534480bdc5",
-        alt: "A wooden dining table and chairs in a quiet room",
-        by: "gabiontheroad",
-    },
-    spiral: {
-        id: "photo-1623697899811-f2403f50685e",
-        alt: "A white spiral notebook beside an orange pen",
-        by: "kellysikkema",
-    },
-    pencil: {
-        id: "photo-1598620617148-c9e8ddee6711",
-        alt: "A single brown pencil on a white surface",
-        by: "kellysikkema",
+    paint: {
+        id: "photo-1501366062246-723b4d3e4eb6",
+        alt: "Two hands covered in blue and green paint",
+        by: "amavmexia",
     },
     pillows: {
         id: "photo-1742130847739-f7728ae50176",
         alt: "A notebook filled with pencil sketches of pillows",
         by: "purejulia",
     },
-    portrait: {
-        id: "photo-1616898297271-47896b4daaf1",
-        alt: "A pencil sketch of a man's face on white paper",
-        by: "afnan05",
-    },
     desk: {
         id: "photo-1635183783375-98e857771351",
         alt: "A person at a desk, pen in hand, drawing",
         by: "lesiart",
     },
-    mug: {
-        id: "photo-1562878274-ad7a29ea8cdd",
-        alt: "Black coffee in a mug beside a pen on an open notebook",
-        by: "brandoncormier",
+    portrait: {
+        id: "photo-1616898297271-47896b4daaf1",
+        alt: "A pencil sketch of a man's face on white paper",
+        by: "afnan05",
     },
-    creased: {
-        id: "photo-1659166887111-a11ee78d088a",
-        alt: "A sheet of light brown paper with deep creases",
-        by: "resourceboy",
+    sculptor: {
+        id: "photo-1447758902204-48010b87c24d",
+        alt: "A sculptor shaping a large unfinished head in his studio",
+        by: "iliazolas",
     },
-    spools: {
-        id: "photo-1573680156791-0b85133632b4",
-        alt: "Spools of thread on a beige surface",
-        by: "benignohoyuela",
+    printers: {
+        id: "photo-1611117775350-ac3950990985",
+        alt: "A row of 3D printers making blue plastic parts on a workbench",
+        by: "minkus",
     },
-    sheets: {
-        id: "photo-1787640866691-efc00610d341",
-        alt: "Overlapping sheets of brown and grey paper",
-        by: "anevans",
+    brushes: {
+        id: "photo-1613574714687-c33b9e90200d",
+        alt: "Jars of paintbrushes beside a palette of mixed paint",
+        by: "lauraadaiphoto",
     },
-    tools: {
-        id: "photo-1497218770144-3fea6dbc33fe",
-        alt: "Hand tools laid out on a table",
-        by: "drscythe",
+    clay: {
+        id: "photo-1589051088132-06f36a22012a",
+        alt: "Hands covered in wet clay shaping the rim of a bowl",
+        by: "polarmermaid",
+    },
+    wiring: {
+        id: "photo-1775519686045-cfd36ca0accc",
+        alt: "Hands wiring electronics next to a laptop",
+        by: "ericstoynov",
+    },
+    homedesk: {
+        id: "photo-1758640920659-0bb864175983",
+        alt: "A design desk at home with a laptop, keyboard and books",
+        by: "lgnwvr",
+    },
+    studio: {
+        id: "photo-1759333213207-daabf2584348",
+        alt: "An artist's studio with canvases, shelves and trestle tables",
+        by: "quietcreativestudio",
     },
     benchtop: {
         id: "photo-1631396326628-3105f48b6f2b",
         alt: "A wooden bench top covered in workshop odds and ends",
         by: "baileyal3xander",
     },
-    papers: {
-        id: "photo-1590880795696-20c7dfadacde",
-        alt: "Sheets of white paper on a brown wooden table",
-        by: "adampatterson",
+    model: {
+        id: "photo-1772340163600-ae81082b02df",
+        alt: "A cardboard and wood model of a building",
+        by: "ozym",
     },
-    pages: {
-        id: "photo-1530951517437-1b43a7349b10",
-        alt: "A close-up of a book's pages, fanned",
-        by: "limpido",
+    printing: {
+        id: "photo-1758387836566-6a342434f5b4",
+        alt: "A 3D printer printing a red part",
+        by: "jakubzerdzicki",
     },
-    spine: {
-        id: "photo-1709158997589-c547225f86f3",
-        alt: "A close-up of a hand-bound book on a table",
-        by: "jonathan_bottoms",
+    parts: {
+        id: "photo-1786840320375-d7e316278cc8",
+        alt: "Cardboard and metal prototype parts laid out on white",
+        by: "spencerliao",
+    },
+    carving: {
+        id: "photo-1496769843785-93aa0be525dc",
+        alt: "Hands carving a small wooden bird",
+        by: "phito",
+    },
+    drill: {
+        id: "photo-1494660251519-9845cdb85fc3",
+        alt: "Hands at a drill press",
+        by: "adigold1",
     },
     sewing: {
         id: "photo-1568288796918-03e7d93306bd",
         alt: "Hands sewing white fabric with a needle and thread",
         by: "eliomendes",
     },
-    thread: {
-        id: "photo-1627395831267-26f625eab7b0",
-        alt: "Yellow thread lying on white paper",
-        by: "tip_to",
+    artclass: {
+        id: "photo-1757085242652-f8cd4d3de889",
+        alt: "People working at a shared table in an art class",
+        by: "anya_richter",
     },
-    ribbon: {
-        id: "photo-1595123550384-b81222e23cf9",
-        alt: "Hand-bound books stacked on a wooden shelf",
-        by: "prateekkatyal",
-    },
-    stack: {
-        id: "photo-1660593089590-655831b1dda3",
-        alt: "A stack of books",
-        by: "ohlmanphotography",
-    },
-    blank: {
-        id: "photo-1752010069103-2dac0087b78c",
-        alt: "An open book with blank pages",
-        by: "ranurte",
-    },
-    openpage: {
-        id: "photo-1573848855919-9abecc93e456",
-        alt: "An open notebook page",
-        by: "brandomakesbranding",
-    },
-    nextweek: {
-        id: "photo-1743385779581-670d35cbecbf",
-        alt: "A notebook and a cup of coffee on a wooden table",
-        by: "kellysikkema",
+    tools: {
+        id: "photo-1497218770144-3fea6dbc33fe",
+        alt: "Hand tools laid out on a table",
+        by: "drscythe",
     },
 } as const satisfies Record<string, ClippingSource>
 
@@ -154,7 +134,8 @@ export function clippingUrl(key: ClippingKey): string {
     return `https://images.unsplash.com/${SOURCES[key].id}?w=2400&q=80&auto=format`
 }
 
-/** Distinct photographers, in first-use order, for the colophon. */
+/** Distinct photographers, in the order the pictures appear (SOURCES is
+ * kept in that order), for the colophon. */
 export const CREDITS: string[] = Array.from(
     new Set(Object.values(SOURCES).map((s) => s.by))
 )

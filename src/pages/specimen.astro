@@ -5,7 +5,7 @@ import Base from "~/layouts/Base.astro"
  * Type specimen — the permanent dev surface for the type system. Every
  * preset on the two surfaces the theme prints on (the desk and a sheet), in
  * whichever theme the system is set to — switch the OS to dark to see the
- * cardboard-on-the-mat side (Q27). Not linked from the piece.
+ * charcoal-on-the-mat side (Q27, Q33). Not linked from the piece.
  */
 const surfaces = [
     { name: "sheet", style: "--tc-bg: var(--sheet); --tc-field: var(--sheet);" },
@@ -13,7 +13,7 @@ const surfaces = [
 ]
 ---
 
-<Base title="Quarta Collective — specimen" description="Type specimen.">
+<Base title="Maker's Day Studio — specimen" description="Type specimen.">
     {
         surfaces.map((s) => (
             <section class="stop" style={s.style}>

@@ -91,7 +91,7 @@ export interface Theme {
     }
 }
 
-/** Mirrors tokens.css. Light: blue on pale blue paper. Dark: cardboard on a cutting mat. */
+/** Mirrors tokens.css. Light: blue on pale blue paper. Dark: charcoal on a cutting mat (Q33). */
 export const THEME: Record<"light" | "dark", Theme> = {
     light: {
         surface: { desk: "#EEF3FB", sheet: "#F7FAFF", ruler: "#F8FBFF", card: "#FBFDFF" },
@@ -106,7 +106,7 @@ export const THEME: Record<"light" | "dark", Theme> = {
         },
     },
     dark: {
-        surface: { desk: "#1C3329", sheet: "#4A3D2C", ruler: "#172A22", card: "#56483A" },
+        surface: { desk: "#1C3329", sheet: "#232629", ruler: "#172A22", card: "#2E3236" },
         text: {
             accent: "#D3E4BE",
             ink: "#F1EADA",

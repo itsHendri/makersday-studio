@@ -4,7 +4,7 @@
  * The colour system is the Figma file's (Q27): the "Theme" variable
  * collection, Light and Dark, with each variable's code syntax naming the
  * custom property below. Light is blue on pale blue paper; Dark is
- * cardboard sheets on a green cutting mat. The browser picks one from the
+ * charcoal sheets on a green cutting mat (Q33). The browser picks one from the
  * reader's system setting; `data-theme="light|dark"` on <html> forces one.
  *
  * THEME in src/lib/contrast.ts mirrors the hex values here — the two MUST
@@ -90,7 +90,7 @@
     --bp-desk: 1200px;
 }
 
-/* ── Theme: Dark (Figma "Theme" → Dark) — cardboard on a cutting mat ───── */
+/* ── Theme: Dark (Figma "Theme" → Dark) — charcoal on a cutting mat ────── */
 /*
  * Written twice, because a media query cannot share a block with an
  * attribute selector: once for the system setting (unless the page forces
@@ -100,8 +100,8 @@
     :root:not([data-theme="light"]) {
         color-scheme: dark;
         --desk: #1c3329; /* the mat */
-        --sheet: #4a3d2c; /* cardboard */
-        --card: #56483a;
+        --sheet: #232629; /* charcoal (Q33; cardboard until then) */
+        --card: #2e3236;
         --print: #d8d2c2;
         --ruler: #172a22; /* the mat's printed edge */
         --tape: rgb(138 118 80 / 0.6);
@@ -110,10 +110,10 @@
         --muted: #c2bfa8; /* sage */
         --subtle: #a29e86;
         --mark: #e8be72; /* brass */
-        --ruled-line: #5e4f3b;
-        --square-line: #5e4f3b;
-        --margin-line: #7a6040;
-        --dot: #6a5b46;
+        --ruled-line: #3d4247;
+        --square-line: #3d4247;
+        --margin-line: #555b62;
+        --dot: #43484e;
         --line-rgb: 211 230 201; /* the mat's printed grid */
         --desk-line: rgb(var(--line-rgb) / 0.1);
         --desk-major: rgb(var(--line-rgb) / 0.24);
@@ -131,8 +131,8 @@
 :root[data-theme="dark"] {
     color-scheme: dark;
     --desk: #1c3329;
-    --sheet: #4a3d2c;
-    --card: #56483a;
+    --sheet: #232629;
+    --card: #2e3236;
     --print: #d8d2c2;
     --ruler: #172a22;
     --tape: rgb(138 118 80 / 0.6);
@@ -141,10 +141,10 @@
     --muted: #c2bfa8;
     --subtle: #a29e86;
     --mark: #e8be72;
-    --ruled-line: #5e4f3b;
-    --square-line: #5e4f3b;
-    --margin-line: #7a6040;
-    --dot: #6a5b46;
+    --ruled-line: #3d4247;
+    --square-line: #3d4247;
+    --margin-line: #555b62;
+    --dot: #43484e;
     --line-rgb: 211 230 201;
     --desk-line: rgb(var(--line-rgb) / 0.1);
     --desk-major: rgb(var(--line-rgb) / 0.24);

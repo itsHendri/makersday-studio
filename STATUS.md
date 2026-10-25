@@ -1,4 +1,4 @@
-# Status — 2026-10-08
+# Status — 2026-10-25
 
 **Eighth pass: the pile (Q19–Q21).** Quarta Collective is a space to make
 and create with friends; the website is a visual representation of that —
@@ -18,6 +18,11 @@ real paper.
 Since 2026-10-11 there is no handwriting on the page: the margin notes,
 drawn arrows and sketched marks are gone from the site and Figma, and so
 is Caveat (Q28).
+
+**2026-10-25: Maker's Day Studio (Q32).** The project is renamed, and the
+story is rewritten around the art of making in ten sheets. Hendri compared
+a muralia.at-style panel version and kept the pile. The faces are on the back cover, and there is a new link
+preview.
 
 ## Verified — the pile (2026-10-08)
 
