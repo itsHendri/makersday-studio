@@ -131,12 +131,23 @@ export function initProgressRail(options: ProgressRailOptions): () => void {
         if (btn) jump(Number(btn.dataset.cell), btn.getAttribute("aria-label") ?? "")
     }
 
+    // The wordmark takes you back to the cover (Q33), the same way a tab does.
+    const home = document.querySelector<HTMLElement>("[data-home]")
+    const onHome = (e: MouseEvent) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
+        e.preventDefault()
+        const first = cellsEl?.querySelector<HTMLElement>('[data-cell="0"]')
+        jump(0, first?.getAttribute("aria-label") ?? "Page 1")
+    }
+
     cellsEl?.addEventListener("click", onClick)
+    home?.addEventListener("click", onHome)
     window.addEventListener("tc:scroll", onScroll)
     paint(0)
 
     return () => {
         cellsEl?.removeEventListener("click", onClick)
+        home?.removeEventListener("click", onHome)
         window.removeEventListener("tc:scroll", onScroll)
     }
 }

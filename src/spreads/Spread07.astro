@@ -1,51 +1,51 @@
 ---
 import Clipping from "~/components/Clipping.astro"
+import { STORY } from "~/content/story"
 
-/* Spread 07 — materials. The stock is turning to newsprint here. */
+/* Spread 07 — Prototype everything. The words are in content/story.ts (Q32). */
+const page = STORY[7]!
+const [plain, lean] = page.title
 ---
 
-<section class="tc-sector is-ruled" id="tc-sector-07" aria-label="Page 7: Paper, ink, blade">
+<section class="tc-sector" id="tc-sector-07" aria-label={`Page 8: ${page.tab}`}>
+    <h2 class="spread-title t-display" data-reveal>{plain && `${plain} `}<em>{lean}</em></h2>
 
-    <h2 class="spread-title t-display" data-reveal>Paper, ink, <em>blade</em></h2>
-
-    <p class="spread-note t-body">
-        Samples from three shops and a skip. Paper is judged by folding it,
-        ink by how it sits on the fold, the lino by how it takes a blade.
-    </p>
+    <p class="spread-note t-body">{page.body}</p>
 
     <Clipping
         id="07-0"
-        src="creased"
-        caption="120gsm — too thin"
-        x={80}
-        y={480}
-        w={300}
-        h={220}
+        src={page.photos[0].src}
+        caption={page.photos[0].caption}
+        x={780}
+        y={110}
+        w={340}
+        h={420}
         kind="scan"
-        rotate={-3}
+        rotate={2}
+        tape
     />
 
     <Clipping
         id="07-1"
-        src="spools"
-        caption="riso blue, two passes"
-        x={460}
+        src={page.photos[1].src}
+        caption={page.photos[1].caption}
+        x={160}
         y={480}
         w={320}
-        h={230}
+        h={220}
         kind="scan"
-        rotate={2}
+        rotate={-2}
     />
 
     <Clipping
         id="07-2"
-        src="sheets"
-        caption="160 — just right"
-        x={800}
-        y={320}
-        w={440}
-        h={290}
+        src={page.photos[2].src}
+        caption={page.photos[2].caption}
+        x={540}
+        y={560}
+        w={300}
+        h={190}
         kind="scan"
-        rotate={-1}
+        rotate={1}
     />
 </section>

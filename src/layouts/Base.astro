@@ -32,16 +32,17 @@ interface Props {
 }
 
 const {
-    title = "Quarta Collective",
-    description = "A space to make and create with friends. Three of us, one table, Wednesday evenings.",
+    title = "Maker's Day Studio",
+    description = "A creative studio that makes things — projects, collaborations and a making day. The art of making, from noticing to doing it again.",
 } = Astro.props
 
 const canonical = new URL(Astro.url.pathname, Astro.site)
 
 /*
- * The link preview (Q26): the cover with the three of us, 1200 × 630, as a
- * JPEG under 100 KB so WhatsApp and iMessage show it. Made from Hendri's
- * Figma cover ("Link preview — 1200 × 630"), with the real faces pasted in.
+ * The link preview (Q26, Q32): the Maker's Day Studio cover, 1200 × 630, as
+ * a JPEG under 100 KB so WhatsApp and iMessage show it. Exported from the
+ * Figma frame "Link preview — Maker's Day Studio (og:image)", bound to the
+ * Theme variables (Light).
  * The URL must be absolute, so it is resolved against `site`.
  */
 const ogImage = new URL(ogCover.src, Astro.site)
@@ -66,7 +67,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "")
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonical} />
-        <meta property="og:site_name" content="Quarta Collective" />
+        <meta property="og:site_name" content="Maker's Day Studio" />
         <meta property="og:image" content={ogImage} />
         <meta property="og:image:width" content={String(ogCover.width)} />
         <meta property="og:image:height" content={String(ogCover.height)} />

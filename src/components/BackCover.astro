@@ -1,5 +1,6 @@
 ---
 import { CREDITS } from "~/content/clippings"
+import People from "~/components/People.astro"
 
 /* The first four photographers, as on the Figma back cover (Q29). The full
  * list stays in clippings.ts, with every source. */
@@ -32,17 +33,22 @@ import { CREDITS } from "~/content/clippings"
 
         <div class="back-cols">
             <div class="back-col">
-                <p class="back-label t-label">Quarta Collective</p>
+                <p class="back-label t-label">Maker's Day Studio</p>
                 <p class="t-body">
-                    A space to make and create with friends. Quarta-feira:
-                    Wednesday evenings, one table, a few of us.
+                    A creative studio that makes things: projects,
+                    collaborations and a making day. For now it works across a
+                    few home studios; one day, a place of its own.
                 </p>
+                {/* The three of us moved here from the cover (Q32): the story
+                    is about making, the back cover says who makes it. */}
+                <People />
+                <p class="back-names t-body">Hendri, Bruno and Tiuri.</p>
             </div>
             <div class="back-col">
                 <p class="back-label t-label">Colophon</p>
                 <p class="t-body">
-                    This site tells the story; the notebook itself is made by
-                    hand. Type: Amatic SC · Inter · Courier Prime · Special Elite.
+                    This site tells how a thing gets made. Type: Amatic SC ·
+                    Inter · Courier Prime · Special Elite.
                     hendri.design · 2026.
                 </p>
             </div>
@@ -56,7 +62,7 @@ import { CREDITS } from "~/content/clippings"
 
         {/* Pressed into the desk, the way paper.design sets its name into
             its footer: ink at a whisper, multiplied, with a light edge. */}
-        <p class="back-wordmark" aria-hidden="true">Quarta</p>
+        <p class="back-wordmark" aria-hidden="true">Maker's Day</p>
     </div>
 </section>
 
@@ -122,6 +128,12 @@ import { CREDITS } from "~/content/clippings"
     }
 
 
+    .back-col :global(.people) {
+        margin-top: 22px;
+    }
+    .back-names {
+        margin-top: 10px;
+    }
     .back-wordmark {
         position: absolute;
         left: 0;
@@ -129,7 +141,7 @@ import { CREDITS } from "~/content/clippings"
         bottom: -0.2em;
         text-align: center;
         font-family: var(--font-title);
-        font-size: min(30vw, 62vh);
+        font-size: min(19vw, 48vh); /* "Maker's Day" is twice as long as "Quarta" was */
         line-height: 1;
         letter-spacing: -0.02em;
         font-weight: 700;

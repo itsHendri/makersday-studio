@@ -1,0 +1,63 @@
+---
+import Clipping from "~/components/Clipping.astro"
+import { STORY } from "~/content/story"
+
+/* Spread 05 — Any material — four of them, of many. The words are in content/story.ts (Q32). */
+const page = STORY[5]!
+const [plain, lean] = page.title
+---
+
+<section class="tc-sector" id="tc-sector-05" aria-label={`Page 6: ${page.tab}`}>
+    <h2 class="spread-title t-display" data-reveal>{plain && `${plain} `}<em>{lean}</em></h2>
+
+    <p class="spread-note t-body">{page.body}</p>
+
+    <Clipping
+        id="05-0"
+        src={page.photos[0].src}
+        caption={page.photos[0].caption}
+        x={80}
+        y={470}
+        w={320}
+        h={220}
+        kind="scan"
+        rotate={-2}
+    />
+
+    <Clipping
+        id="05-1"
+        src={page.photos[1].src}
+        caption={page.photos[1].caption}
+        x={450}
+        y={540}
+        w={260}
+        h={200}
+        kind="scan"
+        rotate={3}
+    />
+
+    <Clipping
+        id="05-2"
+        src={page.photos[2].src}
+        caption={page.photos[2].caption}
+        x={760}
+        y={110}
+        w={300}
+        h={380}
+        kind="scan"
+        rotate={-1}
+        tape
+    />
+
+    <Clipping
+        id="05-3"
+        src={page.photos[3].src}
+        caption={page.photos[3].caption}
+        x={1000}
+        y={520}
+        w={300}
+        h={210}
+        kind="scan"
+        rotate={2}
+    />
+</section>

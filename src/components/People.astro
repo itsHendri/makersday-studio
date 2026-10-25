@@ -4,7 +4,8 @@ import { PEOPLE, JOIN_LABEL, portraitUrl } from "~/content/people"
 import { SIGNUP } from "~/content/signup"
 
 /*
- * The three of us, on the cover (Q24) — Hendri's Figma cover, as drawn:
+ * The three of us — on the back cover since Q32, on the cover before that
+ * (Q24, Hendri's Figma cover, as drawn):
  * 64px photos overlapping by 16 with a thin white ring, then a dashed "+"
  * 16px after the stack that opens the signup sheet (Q25). Hovering or focusing a face shows its name in a
  * dark pill just under it.
@@ -54,7 +55,7 @@ const joinable = !!SIGNUP.endpoint
     .people {
         display: flex;
         align-items: center;
-        margin: 34px 0 0; /* face tops at sheet y 398, as drawn */
+        margin: 34px 0 0;
         padding: 0;
         list-style: none;
     }

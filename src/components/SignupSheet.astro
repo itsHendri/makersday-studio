@@ -12,8 +12,9 @@ import { SIGNUP } from "~/content/signup"
  * It is drawn as one more sheet of the stock, laid on top of the pile: the
  * same paper, texture and shadow as a page, with a ruled box to write in.
  *
- * The copy and fields are Hendri's "A place at the table" (Figma, Q31): a
- * name, an email to reply to, and — optional — what you would bring or make.
+ * The fields are Hendri's "A place at the table" (Figma, Q31): a name, an
+ * email to reply to, and — optional — what you would like to make. The copy
+ * is the studio's since the rename (Q32): projects and collaborations.
  * Submissions go to the form service configured in content/signup.ts; until
  * it is set, the cover shows no "+" and nothing opens this.
  */
@@ -30,10 +31,10 @@ const configured = !!SIGNUP.endpoint
     >
         <button type="button" class="signup-close t-label" data-signup-close aria-label="Close">close ✕</button>
 
-        <h2 class="signup-title t-display" id="tc-signup-title">A place at the table</h2>
+        <h2 class="signup-title t-display" id="tc-signup-title">Make it with us</h2>
         <p class="signup-intro t-body">
-            Three of us, one table, Wednesday evenings. If you’d like to make
-            something with us, leave your name here. It starts with a hello.
+            Have a project, a collaboration or just an idea? Tell us a little
+            about it and we'll write back.
         </p>
 
         <label class="signup-field">
@@ -64,7 +65,7 @@ const configured = !!SIGNUP.endpoint
         </label>
 
         <label class="signup-field">
-            <span class="signup-label">What would you bring or make? <span class="signup-optional">· optional</span></span>
+            <span class="signup-label">What would you like to make? <span class="signup-optional">· optional</span></span>
             <textarea
                 class="t-body"
                 name="make"
@@ -75,7 +76,7 @@ const configured = !!SIGNUP.endpoint
         </label>
 
         {Object.entries(SIGNUP.hidden).map(([k, v]) => <input type="hidden" name={k} value={v} />)}
-        <input type="hidden" name="subject" value="Quarta Collective — a request for a place at the table" />
+        <input type="hidden" name="subject" value="Maker's Day Studio — someone wants to make something" />
         {/* Spam trap: invisible to people, filled in by bots. Both services
             know these names; the script also drops any submission that has it. */}
         <div class="signup-trap" aria-hidden="true">
@@ -85,7 +86,7 @@ const configured = !!SIGNUP.endpoint
 
         <div class="signup-actions">
             <p class="signup-status t-body" role="status" aria-live="polite" data-status></p>
-            <button type="submit" class="signup-send t-label" data-signup-send>Request an invitation <span aria-hidden="true">→</span></button>
+            <button type="submit" class="signup-send t-label" data-signup-send>Get in touch <span aria-hidden="true">→</span></button>
         </div>
         <p class="signup-small t-eyebrow">
             {configured ? "We only use your email to reply." : "Not connected yet — this form does not send anywhere."}

@@ -1,7 +1,7 @@
 # GitHub Pages deploy — inherited from memory-lane (A23 there).
 #
 # This is the preview host, not the final one. `astro.config.mjs` carries
-# `base: "/quarta-collective"` because a project site is served from a subpath; if
+# `base: "/makersday-studio"` because a project site is served from a subpath; if
 # the piece ever moves to a custom domain, drop the base there and this
 # workflow keeps working unchanged.
 name: deploy

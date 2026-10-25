@@ -1,0 +1,104 @@
+---
+import Base from "~/layouts/Base.astro"
+import NotebookChrome from "~/components/NotebookChrome.astro"
+import BackCover from "~/components/BackCover.astro"
+import SignupSheet from "~/components/SignupSheet.astro"
+import { TITLES } from "~/spreads/titles"
+import "~/styles/stage.css"
+import "~/styles/spread.css"
+import "~/styles/paper.css"
+
+/*
+ * The pile (Q19–Q21, Q32): the desk, the index, the back cover, the two
+ * dialogs and the scripts that run them. The sheets come in through the
+ * slot from pages/index.astro.
+ *
+ * NOTHING MAY COME AFTER THE TRACK — no footer, no colophon section. A section
+ * below it keeps scrolling once the read is done and takes the pinned stage
+ * off the top of the screen. The colophon is on the back cover, which lives
+ * INSIDE the stage, under the pile, for exactly this reason. (memory-lane #36.)
+ *
+ * `--tc-sectors` drives the track's height ((sheets + 1) × 100vh), so it must
+ * match the number of sheets in the slot. TITLES comes from STORY, and so
+ * must every page that uses this.
+ */
+
+interface Props {
+    title?: string
+    description?: string
+}
+const { title, description } = Astro.props
+const SPREADS = TITLES.length
+---
+
+
+<Base title={title} description={description}>
+    {/* The index comes FIRST in the document: it is the only navigation, so a
+        keyboard user reaches it before the 24 clippings, not after. (Q13) */}
+    <NotebookChrome sectors={SPREADS} titles={TITLES} />
+
+    <div class="tc-track" id="tc-track" style={`--tc-sectors:${SPREADS}`}>
+        <div class="tc-stage" id="tc-stage">
+            <BackCover />
+            <div class="tc-strip" id="tc-strip">
+                <slot />
+            </div>
+        </div>
+    </div>
+
+    {/* The "+" on the cover opens this: a sheet laid on top of the pile. */}
+    <SignupSheet />
+
+    {/* A clipping held up to the light, over everything else. */}
+    {/* A native <dialog> (Q31): showModal() holds focus inside it, makes the
+        page behind inert and closes on Escape — like the signup sheet. */}
+    <dialog class="lightbox" id="tc-lightbox" aria-label="Clipping, enlarged">
+        <button type="button" class="lightbox-close t-label" data-lb-close>close ✕</button>
+        <figure class="lightbox-figure">
+            <img alt="" />
+            <figcaption></figcaption>
+        </figure>
+    </dialog>
+</Base>
+
+<script>
+    import { initScrollRig } from "~/lib/scroll-rig"
+    import { initReveal } from "~/lib/reveal"
+    import { initNotebook } from "~/lib/notebook"
+    import { initLightbox } from "~/lib/lightbox"
+    import { initSignup } from "~/lib/signup"
+    import {
+        initProgressRail,
+        initPageCounter,
+        initFocusFollow,
+    } from "~/lib/chrome"
+
+    const byId = (id: string) => document.getElementById(id)
+    const spreads = Number(
+        getComputedStyle(byId("tc-track")!).getPropertyValue("--tc-sectors")
+    ) || 12
+
+    /*
+     * Everything here is cheap — there is no WebGL, no boot, no audio — so
+     * there is no critical/deferred split any more (memory-lane A20). The
+     * reveal subscribes before the rig's first publish, so the cover's
+     * headline hears it; then the rig, so scroll works from the first frame.
+     */
+    initReveal()
+    initScrollRig()
+    initNotebook()
+    initSignup()
+
+    const lightbox = byId("tc-lightbox") as HTMLDialogElement | null
+    if (lightbox) initLightbox({ root: lightbox })
+
+    const rail = byId("tc-rail")
+    if (rail) initProgressRail({ root: rail, sectors: spreads })
+
+    const strip = byId("tc-strip")
+    if (strip) initFocusFollow({ strip })
+
+    const page = byId("tc-page")
+    if (page) initPageCounter({ root: page, sectors: spreads })
+
+</script>

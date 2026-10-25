@@ -4,25 +4,34 @@
  * DRAW on (dot grid). No mode switch — the page is one or the other, so
  * nobody has to choose before they start. Both keep what was put on them in
  * this browser's localStorage (`lib/notebook.ts`), and say so.
+ *
+ * Each has a headline at the size of every spread's (Q32): with only a
+ * prompt it was not obvious the page was there to be used.
  */
 
 interface Props {
+    /** Index in the pile; the page number is n + 1. */
     n: number
     kind: "write" | "draw"
+    /** [plain, emphasised], as on every spread. */
+    title: [string, string]
     prompt: string
     /** Stable storage key — survives renumbering. */
     key: string
 }
 
-const { n, kind, prompt, key } = Astro.props
+const { n, kind, title, prompt, key } = Astro.props
+const [plain, lean] = title
 const nn = String(n).padStart(2, "0")
 ---
 
 <section
     class={`tc-sector notebook-spread ${kind === "write" ? "is-ruled is-write" : "is-grid is-draw"}`}
     id={`tc-sector-${nn}`}
-    aria-label={`Page ${n}: your page, ${kind}`}
+    aria-label={`Page ${n + 1}: your page, ${kind}`}
 >
+
+    <h2 class="spread-title t-display" data-reveal>{plain && `${plain} `}<em>{lean}</em></h2>
 
     <p class="notebook-prompt t-body">{prompt}</p>
 

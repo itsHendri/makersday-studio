@@ -1,19 +1,17 @@
-# quarta-collective
+# makersday-studio
 
-**Quarta Collective** — a space to make and create with friends.
+**Maker's Day Studio** — a creative studio that makes things: projects,
+collaborations and a making day. (Quarta Collective until 2026-10-25.)
 
-A few of us meet one evening a week to build things. This site is the story
-of that — twelve printed spreads on what we noticed, drew, argued about and
-built, set like a zine and annotated like a notebook. The thing we are
-making this season is a notebook by hand, half printed and half blank; the
-site tells its story and nothing more. Vertical scroll turns a wide strip of
-twelve spreads left→right beneath a pinned viewport, and the stock changes
-as you go — white, a warm white, newsprint, a yellow sheet, and back.
-Headlines are typed in capitals with a red rule under them; notes are written
-in the margins; photographs are taped in, or printed in one riso ink; block
-prints land where there was room.
+This site tells the story of the art of making, in ten sheets on a desk:
+notice, start before you're ready, use any material, make it anywhere,
+prototype everything, do it again, then make it with us. Two of the sheets
+are the visitor's own, one to write on and one to draw on. Vertical scroll
+slides the sheets off the pile, one by one, to the left, down to a back
+cover. The words are in `src/content/story.ts`.
 
-Live: https://itshendri.github.io/quarta-collective/
+Live: https://itshendri.github.io/makersday-studio/ (makersday.studio, once
+the domain is bought)
 
 ## Where it comes from
 
@@ -41,7 +39,7 @@ terminal, synthesized static) does not.
 
 ```bash
 npm install
-npm run dev         # localhost:5251/quarta-collective/
+npm run dev         # localhost:5251/makersday-studio/
 npm run typecheck
 npm run build
 node scripts/sweep-contrast.ts
