@@ -1,123 +1,99 @@
-# Status — 2026-10-25
+# Status — 2026-11-04
 
-**Eighth pass: the pile (Q19–Q21).** Quarta Collective is a space to make
-and create with friends; the website is a visual representation of that —
-fourteen sheets (twelve printed spreads and two pages that are the
-visitor's) telling the story of how a thing gets made there. The thing,
-this season, is a notebook made by hand (Q10).
+**Maker's Day Studio** (Q32, Q33). A creative studio that makes things,
+takes on projects and collaborations, and meets for a making day. The site
+is a storytelling piece about the art of making: ten sheets in a pile on a
+graph-paper desk, slid off one by one to the left as you scroll, down to a
+back cover with the faces, the colophon and the signup sheet.
 
-Since 2026-10-08 the sheets lie in a pile on a graph-paper desk, and
-scrolling slides them off one by one to the left, down to a back cover
-with the colophon and credits. The texture, rulers, crop marks and the
-end reveal are taken from paper.design and paper.design/mono, drawn again
-in our own colours (Q20). Between Q13 and Q19, Hendri's Figma rounds
-(Q14–Q18) moved the index to a 48px ruler-gutter on the right and set the
-rulings. What remains is Hendri's eye, real photographs, and a scan of the
-real paper.
+Live at https://itshendri.github.io/makersday-studio/ (GitHub Pages, built
+from `main`). `main` is clean; the last change is PR #7.
 
-Since 2026-10-11 there is no handwriting on the page: the margin notes,
-drawn arrows and sketched marks are gone from the site and Figma, and so
-is Caveat (Q28).
+The ten sheets, from `src/content/story.ts`:
 
-**2026-10-25: Maker's Day Studio (Q32).** The project is renamed, and the
-story is rewritten around the art of making in ten sheets. Hendri compared
-a muralia.at-style panel version and kept the pile. The faces are on the back cover, and there is a new link
-preview.
+1. The art of making
+2. Awareness
+3. Write it down (the visitor's, ruled)
+4. Trust the process
+5. Draw it out (the visitor's, dotted)
+6. Any material
+7. Anywhere
+8. Prototype everything
+9. Again, better
+10. Make it with us
 
-## Verified — the pile (2026-10-08)
+Look: blue on pale blue paper (light), and charcoal sheets on a green
+cutting mat (dark), from Figma's Theme variables (Q27, Q33). Amatic SC
+titles, Inter body, Courier Prime labels, Special Elite captions, no
+handwriting (Q28). The muralia.at-style panel version was compared and
+deleted; the pile stays (Q32).
 
-| Check | Result |
-|---|---|
-| `astro check` | 0 errors, 0 warnings |
-| Contrast sweep, textured surfaces | desk, ruler and all 14 sheets pass; worst red 4.51:1 (desk), worst dim 5.23:1 |
-| `__tcPan(0)` / `(3.5/14)` / `(1)` | p. 1; sheet 4 mid-slide over an untouched sheet 5, "p. 4"; every sheet gone, back cover shown, "back to the top" shown |
-| Tab 08 | lands at `progressForSheet(7)` to the pixel; "p. 8" and the rail agree |
-| Focus-follow | a focused clipping on sheet 11 brings sheet 11 to the top |
-| Headlines at load | only the cover's is revealed |
-| Draw page | stroke centred under the pointer at scale 0.90 and 0.82, after a resize |
-| Ruler ticks | long tick on each index number's centre (y 138 = "01"); desk's left ruler in the same phase |
-| Mobile 375×812 | page 375 wide (was 1238: stickers and a note overflowed); back cover fixed under the last sheet, revealed as it scrolls |
-| Build | texture emitted as a hashed, base-prefixed `/_astro` asset |
-
-Not verified: motion feel (the slide, its ease, the hold) — Hendri's ⌘P
-check. The agent tab ran no rAF while the pane was hidden.
-
-## Earlier passes
-
-### Done (to Q13)
-
-- Forked from `~/Development/memory-lane`'s working tree (not the GitHub
-  clone, so the uncommitted mobile fixes came too). Fresh history; the first
-  commit is the verbatim fork so every change is a reviewable diff (Q1).
-- Deleted: effect-layer, screen-fx, boot, audio, ascii-mark, vertical-read,
-  the machine chrome, the rig test page, NASA plates, self-hosted fonts.
-- **Stock ramp** white → warm white → white → newsprint → yellow sheet →
-  white. Sweep: **min 16.88:1 ink (p 0.649), 4.60:1 dim (p 0.920), zero
-  flips.** (Q2, Q8)
-- **Type**: Syne 800 (display, misregistered, one word per headline in the
-  second ink), Caveat (hand), Courier Prime (typed), via `@fontsource`; preloads import the hashed
-  files with `?url`, verified to match the stylesheet's `url()` in `dist`. (Q3)
-- **Paper**: grain overlay, ruled and dot-grid page modifiers, fold and
-  staples on the cover, tape, torn-edge clip, rubber stamps, a coffee ring,
-  halftone screen, `BlockPrint` motifs with a second misregistered pass. (Q8)
-- **Components**: `Clipping` (photo / polaroid / scrap / riso duotone, remote
-  or local source), `Note` (positioned handwriting with drawn arrows), `Sticker`,
-  `NotebookChrome` (index tabs = keyboard nav, page number, close-the-notebook
-  release at p ≥ 0.985).
-- **Reveal**: headline wipe + pencil underline, notes and clippings fade in,
-  staggered per spread. Mask, not clip-path (Q6).
-- **Imagery**: 24 clippings on 22 Unsplash photographs, keyed in
-  `src/content/clippings.ts`; credits generated into the colophon. Two ids
-  from the first pick 404'd at build and were replaced; all are HEAD-checked
-  (Q4).
-- Tab jumps centre the spread in the stage (Q5).
-- Story: the collective's weekly making, with the hand-made notebook as the
-  thread — materials, the bench, prototype one, printing, again, the thing
-  itself. Cover states what the space is for. (Q10)
-- Review pass (Q11): Bricolage Grotesque headlines that wrap instead of
-  bleeding; tab progress as a fill inside the current tab; page-edge
-  dividers and no two adjacent rulings alike (`is-squared` added); date-only
-  eyebrows; lightbox on every clipping (1600px variant, keyboard-reachable);
-  two visitor pages — write (ruled) and draw (dot grid) — restored as
-  separate pages; `PixelMark` motifs replace the block prints. Fourteen
-  spreads.
-- GitHub Pages: repo public, Pages set to workflow builds, remote-image cache
-  restored between runs.
-
-### Verified at Q13 (the strip; superseded where the pile changed it)
+## Verified — 2026-11-04
 
 | Check | Result |
 |---|---|
-| `astro check` | 0 errors, 0 warnings |
-| Contrast, 400 samples between stops | min 16.88:1 fg · 4.60:1 dim · 0 flips |
-| Font preload hrefs vs built stylesheet | identical hashed paths, base-prefixed |
-| Remote URLs left in built HTML | 0 (48 AVIF variants emitted) |
-| `__tcPan(1)` | strip at −15776px (16800 − 1024), close control shown, page "p. 11", tab 11 current |
-| Reveal coverage | 55/55 `[data-reveal]` elements observed; heading now intersects (was ratio 0 under clip-path) |
-| Mobile 375×812 | `scrollWidth === innerWidth`, no element past the right edge, tabs hidden, close + page counter present |
-| Fonts loaded | Special Elite, Caveat Variable, Courier Prime 400/700 |
-| Red ribbon on every stock | 5.12 / 5.41 / 4.80 / 4.69 : 1 |
+| `astro check` | 0 errors, 0 warnings, 1 hint |
+| `node scripts/sweep-contrast.ts` | PASS, both themes, texture charged. Lowest required: light muted on the desk 5.14:1, mark on the sheet 4.75:1; dark muted on the sheet 8.30:1 |
+| Live site | title, description, canonical, og:image (1200 × 630 cover) and favicon present; all 24 images have alt text; ~400 KB transferred on load |
+| Live images | one AVIF returned 503 once from GitHub Pages and 200 on three retries: the CDN, not the build |
 
-### Not verified at Q13
+Never verified: **motion feel** (the slide, its ease, the hold, the back
+cover's arrival). The agent tab runs no rAF while the pane is hidden. This
+is Hendri's ⌘P check. **Lighthouse** on the live URL has never been run.
 
-- **Motion feel** — the lerp, the wipe timing, the stagger. Only injected
-  states were measured; rAF is throttled in the agent tab.
-- **The hover tilt** on a clipping, same reason.
-- The deployed URL's Lighthouse numbers.
+## Next — needs Hendri
 
-## Next — Hendri's
+0. **Before sharing: connect the signup sheet.** `endpoint` in
+   `src/content/signup.ts` is `null`. Make a Formspree form
+   (`https://formspree.io/f/<id>`) or a Web3Forms key
+   (`https://api.web3forms.com/submit`) and set it. Until then the form
+   cannot send, and the back cover shows no "+" (Q31).
+1. **⌘P the pile.** Three constants, one each:
+   - how long a page rests before it moves: `HOLD = 0.35` in `src/lib/pile.ts`;
+   - how far it turns as it slides off: `SWEEP_DEG = -4` in `src/lib/scroll-rig.ts`;
+   - the back cover's reveal under the last sheet.
+2. **The copy.** `src/content/story.ts` is a first draft, and so are the
+   prompts on the write and draw pages. Hendri owns the words.
+3. **Real photographs.** Swap the Unsplash placeholders one key at a time in
+   `src/content/clippings.ts`; local imports work in the same `Clipping`.
+   The back-cover credits regenerate themselves. Riso duotones want
+   high-contrast pictures.
+4. **Scan the real paper** (600dpi, a blank area, made seamless) for
+   `src/assets/textures/paper.png`. Then delete
+   `scripts/make-paper-texture.ts` and set `TEXTURE_MEAN` in `contrast.ts`
+   from the scan (Q20).
+5. **The other 35 pins.** Only 24 of the Zine board's 59 were visible signed
+   out. Screenshots of the rest would finish the list; the tracing-paper
+   overlay, bulldog clip and pixel motifs are unbuilt.
+6. **Buy makersday.studio**, then:
+   - set `site` to `https://makersday.studio` and `base` to `"/"` in
+     `astro.config.mjs`;
+   - add `public/CNAME` containing `makersday.studio`;
+   - add the GitHub Pages DNS records at the registrar, and set the custom
+     domain in the repo's Pages settings.
+   The old `/quarta-collective/` links already broke with the repo rename
+   and GitHub does not redirect them.
 
-- **2026-10-11:** blue light theme and cardboard-on-the-mat dark mode are in the code (Q27), with Hendri's Figma removals. Not committed yet.
+## Next — can be built without Hendri
 
-0. **Before sharing:** a Formspree or Web3Forms endpoint for the signup
-   sheet (`src/content/signup.ts`). The photos and the link preview are in.
-1. **⌘P the pile.** How long a page rests (HOLD, 35% of its scroll), how far
-   it turns as it goes (−4°), and the back cover. All three are one
-   constant each in `pile.ts` / `scroll-rig.ts`.
-2. **Scan the real paper** (600dpi, blank) to replace the drawn texture.
-3. **The other 35 pins.** Only 24 of the board's 59 are visible signed out;
-   the tracing-paper overlay, bulldog clip and pixel motifs are unbuilt.
-4. **Real photographs**, one key at a time in `src/content/clippings.ts`.
-   Riso duotones want high-contrast source pictures.
-5. The copy is a first draft of the real project. Hendri knows what the
-   notebook actually is; the spreads should follow that.
+See `FUTURE.md` for the full backlog. The two worth doing first:
+
+1. **Keep the page across a resize.** `onResize` in `src/lib/scroll-rig.ts`
+   re-measures but does not re-anchor, so resizing the window lands on a
+   different sheet. Read the page from `detail.page` before measuring, then
+   scroll to `progressForSheet(page, n)` (in `src/lib/pile.ts`) after.
+2. **Run Lighthouse** against the live URL and record the numbers here.
+
+## Loose ends
+
+- The `deploy` script in `package.json` still names the Cloudflare project
+  `quarta-collective`. It is unused (the site is on GitHub Pages) and names
+  a Cloudflare project, not the repo (Q33). Rename or remove it if
+  Cloudflare is ever used.
+- The local folder may still be called quarta-collective on other machines.
+
+## History
+
+Every pass is recorded in `DECISIONS.md` (Q1–Q33) and `CHANGELOG.md`; the
+earlier STATUS tables (the fourteen-spread strip at Q13, the pile at Q19)
+are in git history before 2026-11-04.
