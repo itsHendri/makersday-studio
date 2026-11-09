@@ -18,7 +18,7 @@ no handwriting (Q28); colour scans with tape, the index as a ruler down the righ
 Colour (Q27, Q33): blue on pale blue paper, and a dark mode of charcoal
 sheets on a green cutting mat — from the Figma "Theme" variables, Light and Dark.
 
-This is a **fork of `~/Development/memory-lane`** (SECTOR READ). The scroll
+This is a **fork of `~/Studio/brands/hendri/projects/memory-lane`** (SECTOR READ). The scroll
 rig, stage layout, derived-colour tokens and the type-system shape are lifted
 from it; everything that made that piece a recovery machine is deleted.
 
@@ -26,7 +26,7 @@ from it; everything that made that piece a recovery machine is deleted.
 
 ## The one rule
 
-**`~/Development/memory-lane/DECISIONS.md` (A1–A23) and its upstream
+**`~/Studio/brands/hendri/projects/memory-lane/DECISIONS.md` (A1–A23) and its upstream
 (`~/Framer/timeline-carousel/DECISIONS.md`, #1–#52) are still law for the
 rig.** Nearly every entry records an expensive bug. Before changing anything
 in `scroll-rig.ts`, `stage.css`, `contrast.ts` or the hover behaviour, grep

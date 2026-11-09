@@ -2,7 +2,7 @@
 
 Numbered and append-only. Supersede an entry with a new one; don't rewrite
 history. Entries here are `Q1, Q2, …` so they never collide with the numbering
-they cite: memory-lane's `A1–A23` (`~/Development/memory-lane/DECISIONS.md`)
+they cite: memory-lane's `A1–A23` (`~/Studio/brands/hendri/projects/memory-lane/DECISIONS.md`)
 and the Framer upstream's `#1–#52`. Both still apply to the rig unless an
 entry here supersedes them.
 
