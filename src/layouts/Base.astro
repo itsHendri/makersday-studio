@@ -96,5 +96,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "")
     </head>
     <body>
         <slot />
+        <!-- Review comments (Hendri's workspace): does nothing unless the page is opened with a review link. -->
+        <script is:inline src="https://review.hendri.design/review.js" defer></script>
     </body>
 </html>
